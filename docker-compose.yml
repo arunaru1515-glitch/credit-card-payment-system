@@ -1,0 +1,107 @@
+services:
+
+  # ==================================================
+  # MYSQL DATABASE
+  # ==================================================
+  mysql:
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+
+    container_name: credit_card_mysql
+
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+
+    ports:
+      - "3307:3306"
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mysqladmin ping -h localhost -u root -p$$MYSQL_ROOT_PASSWORD"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+
+  # ==================================================
+  # DJANGO BACKEND
+  # ==================================================
+  django:
+    build:
+      context: ./django_backend
+      dockerfile: Dockerfile
+
+    container_name: credit_card_django
+
+    environment:
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: mysql
+      DB_PORT: 3306
+
+    ports:
+      - "8000:8000"
+
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+    command: >
+      sh -c "
+      python manage.py migrate &&
+      python manage.py runserver 0.0.0.0:8000
+      "
+
+
+  # ==================================================
+  # FASTAPI PAYMENT SERVICE
+  # ==================================================
+  fastapi:
+    build:
+      context: ./fastapi_payment
+      dockerfile: Dockerfile
+
+    container_name: credit_card_fastapi
+
+    environment:
+      DJANGO_BASE_URL: http://django:8000
+
+    ports:
+      - "8001:8001"
+
+    depends_on:
+      - django
+
+
+  # ==================================================
+  # REACT FRONTEND
+  # ==================================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+
+    container_name: credit_card_frontend
+
+    ports:
+      - "3000:80"
+
+    depends_on:
+      - fastapi
+
+
+# ==================================================
+# MYSQL VOLUME
+# ==================================================
+
+volumes:
+  mysql_data:

@@ -1,0 +1,1472 @@
+/* =====================================================
+   CARDPAY - MY CARDS / ADD CARD
+   SAME BACKGROUND AS DASHBOARD
+   ===================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+
+/* =====================================================
+   PAGE
+   ===================================================== */
+
+.add-card-page {
+  position: relative;
+
+  width: 100%;
+
+  min-height: 0 !important;
+  height: auto !important;
+
+  margin: 0;
+
+  overflow: visible;
+
+  color: #ffffff;
+
+  background:
+    radial-gradient(
+      circle at 82% 8%,
+      rgba(91, 73, 210, 0.20),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 8% 88%,
+      rgba(24, 126, 150, 0.13),
+      transparent 24%
+    ),
+    linear-gradient(
+      135deg,
+      #081321 0%,
+      #0c192b 50%,
+      #081321 100%
+    );
+}
+
+
+/* =====================================================
+   BACKGROUND DECORATION
+   ===================================================== */
+
+.add-card-page::before {
+  content: "";
+
+  position: absolute;
+
+  width: 500px;
+  height: 500px;
+
+  top: -290px;
+  right: -150px;
+
+  border-radius: 50%;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.035);
+
+  box-shadow:
+    0 0 0 38px rgba(255, 255, 255, 0.012),
+    0 0 0 76px rgba(255, 255, 255, 0.007);
+
+  pointer-events: none;
+}
+
+
+.add-card-page::after {
+  content: "";
+
+  position: absolute;
+
+  width: 330px;
+  height: 330px;
+
+  left: -190px;
+  bottom: -210px;
+
+  border-radius: 50%;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.025);
+
+  pointer-events: none;
+}
+
+
+/* =====================================================
+   REMOVE OLD PAGE NAVBAR
+   GLOBAL APP LAYOUT ALREADY HAS NAVBAR
+   ===================================================== */
+
+.add-card-navbar {
+  display: none !important;
+}
+
+
+/* =====================================================
+   MAIN CONTAINER
+   ===================================================== */
+
+.add-card-container {
+  position: relative;
+
+  z-index: 2;
+
+  width:
+    min(
+      calc(100% - 56px),
+      1500px
+    );
+
+  margin: 0 auto;
+
+  padding:
+    28px 0 18px;
+}
+
+
+/* =====================================================
+   DESKTOP GRID
+   ===================================================== */
+
+@media (min-width: 1050px) {
+
+  .add-card-container {
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1.02fr)
+      minmax(0, 0.98fr);
+
+    column-gap: 20px;
+
+    row-gap: 18px;
+
+    align-items: start;
+  }
+
+
+  .add-card-intro {
+    grid-column:
+      1 / -1;
+  }
+
+
+  .add-card-message {
+    grid-column:
+      1 / -1;
+  }
+
+
+  .card-details-panel {
+    grid-column: 1;
+  }
+
+
+  .saved-cards-section {
+    grid-column: 2;
+
+    margin-top: 0;
+  }
+}
+
+
+/* =====================================================
+   PAGE INTRO
+   ===================================================== */
+
+.add-card-intro {
+  margin-bottom: 0;
+}
+
+
+.add-card-overline {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #8da0ba;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+
+  text-transform: uppercase;
+}
+
+
+.add-card-intro h1 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size:
+    clamp(
+      34px,
+      3.5vw,
+      46px
+    );
+
+  line-height: 1.04;
+
+  font-weight: 800;
+
+  letter-spacing: -0.04em;
+}
+
+
+.add-card-intro p {
+  margin:
+    8px
+    0
+    0;
+
+  color: #8ea0b7;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+
+
+/* =====================================================
+   MESSAGE
+   ===================================================== */
+
+.add-card-message {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  margin: 0;
+
+  padding:
+    10px
+    13px;
+
+  border-radius: 9px;
+
+  font-size: 10px;
+}
+
+
+.success-message {
+  border:
+    1px solid #bfe6d1;
+
+  background:
+    #f1fbf5;
+
+  color: #187447;
+}
+
+
+.error-message {
+  border:
+    1px solid #edcccc;
+
+  background:
+    #fff5f5;
+
+  color: #a52a25;
+}
+
+
+.message-icon {
+  width: 25px;
+  height: 25px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 6px;
+
+  font-size: 10px;
+
+  font-weight: 800;
+}
+
+
+.success-message .message-icon {
+  background: #dff5e8;
+
+  color: #16834d;
+}
+
+
+.error-message .message-icon {
+  background: #fee7e7;
+
+  color: #c33434;
+}
+
+
+.add-card-message strong {
+  display: block;
+
+  margin-bottom: 1px;
+
+  font-size: 10px;
+}
+
+
+.add-card-message span {
+  font-size: 10px;
+}
+
+
+/* =====================================================
+   CARD DETAILS PANEL
+   ===================================================== */
+
+.card-details-panel {
+  min-width: 0;
+
+  padding: 25px;
+
+  border:
+    1px solid #d9e1ea;
+
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f7f9fc 100%
+    );
+
+  color: #172033;
+
+  box-shadow:
+    0 13px 30px
+    rgba(0, 0, 0, 0.18);
+}
+
+
+.card-details-heading {
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 21px;
+}
+
+
+.panel-overline {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #7f8da0;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+}
+
+
+.card-details-heading h2 {
+  margin: 0;
+
+  color: #172137;
+
+  font-size: 24px;
+
+  line-height: 1.1;
+
+  font-weight: 800;
+}
+
+
+.card-details-heading p {
+  margin:
+    6px
+    0
+    0;
+
+  color: #78879b;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+
+/* =====================================================
+   SECURITY BADGE
+   ===================================================== */
+
+.security-badge {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  padding:
+    6px
+    9px;
+
+  border:
+    1px solid #cfe8d9;
+
+  border-radius: 999px;
+
+  background:
+    #f2fbf5;
+
+  color:
+    #25764c;
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+.security-badge span {
+  color: #25a66a;
+
+  font-size: 7px;
+}
+
+
+/* =====================================================
+   FORM
+   ===================================================== */
+
+.add-card-form {
+  width: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 17px;
+}
+
+
+.form-field label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #344054;
+
+  font-size: 11px;
+
+  font-weight: 750;
+}
+
+
+.form-field select,
+.form-field input {
+  width: 100%;
+
+  height: 48px;
+
+  padding:
+    0 14px;
+
+  border:
+    1px solid #ccd6e1;
+
+  border-radius: 9px;
+
+  background:
+    #fbfcfd;
+
+  color:
+    #172033;
+
+  font-size: 13px;
+
+  outline: none;
+
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+
+.form-field select:hover,
+.form-field input:hover {
+  border-color:
+    #aebdcc;
+}
+
+
+.form-field select:focus,
+.form-field input:focus {
+  border-color:
+    #6755c8;
+
+  background:
+    #ffffff;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(103, 85, 200, 0.08);
+}
+
+
+/* =====================================================
+   CARD INPUT ICON
+   ===================================================== */
+
+.input-wrapper {
+  position: relative;
+}
+
+
+.input-card-icon {
+  position: absolute;
+
+  left: 14px;
+  top: 50%;
+
+  transform:
+    translateY(-50%);
+
+  color:
+    #8290a0;
+
+  pointer-events: none;
+}
+
+
+.input-card-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+
+.input-wrapper input {
+  padding-left:
+    43px;
+
+  letter-spacing:
+    0.07em;
+}
+
+
+.field-helper {
+  margin:
+    5px
+    0
+    0;
+
+  color:
+    #8190a0;
+
+  font-size:
+    9px;
+}
+
+
+/* =====================================================
+   ADD CARD BUTTON
+   ===================================================== */
+
+.form-action {
+  padding-top: 1px;
+}
+
+
+.add-card-button {
+  min-width:
+    135px;
+
+  height:
+    44px;
+
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    8px;
+
+  padding:
+    0 18px;
+
+  border:
+    0;
+
+  border-radius:
+    9px;
+
+  background:
+    #111b30;
+
+  color:
+    #ffffff;
+
+  font-size:
+    12px;
+
+  font-weight:
+    750;
+
+  cursor:
+    pointer;
+
+  box-shadow:
+    0 7px 15px
+    rgba(17, 27, 48, 0.18);
+
+  transition:
+    background 0.17s ease,
+    transform 0.17s ease,
+    box-shadow 0.17s ease;
+}
+
+
+.add-card-button:hover {
+  background:
+    #1b2942;
+
+  transform:
+    translateY(-1px);
+
+  box-shadow:
+    0 10px 19px
+    rgba(17, 27, 48, 0.22);
+}
+
+
+.add-card-button:disabled {
+  opacity:
+    0.65;
+
+  cursor:
+    not-allowed;
+
+  transform:
+    none;
+}
+
+
+.add-card-button span {
+  font-size:
+    15px;
+}
+
+
+/* =====================================================
+   SAVED CARDS SECTION
+   ===================================================== */
+
+.saved-cards-section {
+  min-width: 0;
+
+  margin-top: 0;
+}
+
+
+.saved-cards-heading {
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 13px;
+}
+
+
+.section-overline {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color:
+    #8da0ba;
+
+  font-size:
+    9px;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.12em;
+
+  text-transform:
+    uppercase;
+}
+
+
+.saved-cards-heading h2 {
+  margin:
+    0;
+
+  color:
+    #ffffff;
+
+  font-size:
+    24px;
+
+  line-height:
+    1.1;
+
+  font-weight:
+    800;
+}
+
+
+.saved-cards-heading p {
+  margin:
+    5px 0 0;
+
+  color:
+    #8ea0b7;
+
+  font-size:
+    10px;
+}
+
+
+.saved-count {
+  flex-shrink: 0;
+
+  padding:
+    6px
+    10px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.12);
+
+  border-radius:
+    7px;
+
+  background:
+    rgba(255, 255, 255, 0.07);
+
+  color:
+    #b4bfd0;
+
+  font-size:
+    9px;
+
+  font-weight:
+    700;
+}
+
+
+/* =====================================================
+   SAVED CARD GRID
+   ===================================================== */
+
+.saved-card-grid {
+  display: grid;
+
+  grid-template-columns:
+    1fr;
+
+  gap:
+    13px;
+}
+
+
+/* =====================================================
+   SAVED CARD
+   ===================================================== */
+
+.saved-bank-card {
+  position: relative;
+
+  min-width: 0;
+
+  min-height:
+    220px;
+
+  overflow: hidden;
+
+  border-radius:
+    17px;
+
+  color:
+    #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #315fe0 0%,
+      #5145d5 52%,
+      #6d47d8 100%
+    );
+
+  box-shadow:
+    0 17px 30px
+    rgba(54, 62, 170, 0.28);
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+
+.saved-bank-card:hover {
+  transform:
+    translateY(-3px);
+
+  box-shadow:
+    0 21px 35px
+    rgba(54, 62, 170, 0.32);
+}
+
+
+.saved-bank-card-0 {
+  background:
+    linear-gradient(
+      135deg,
+      #315fe0 0%,
+      #5145d5 52%,
+      #6d47d8 100%
+    );
+}
+
+
+.saved-bank-card-1 {
+  background:
+    linear-gradient(
+      135deg,
+      #434ed0 0%,
+      #6348d8 52%,
+      #824de0 100%
+    );
+}
+
+
+.saved-bank-card-2 {
+  background:
+    linear-gradient(
+      135deg,
+      #286aa8 0%,
+      #4658ce 54%,
+      #624bd4 100%
+    );
+}
+
+
+.saved-bank-card::before {
+  content: "";
+
+  position: absolute;
+
+  width: 220px;
+  height: 220px;
+
+  top:
+    -125px;
+
+  right:
+    -75px;
+
+  border-radius:
+    50%;
+
+  background:
+    rgba(255, 255, 255, 0.105);
+}
+
+
+.saved-bank-card::after {
+  content: "";
+
+  position: absolute;
+
+  width: 150px;
+  height: 150px;
+
+  left:
+    -80px;
+
+  bottom:
+    -100px;
+
+  border-radius:
+    50%;
+
+  background:
+    rgba(255, 255, 255, 0.05);
+}
+
+
+.saved-bank-card-content {
+  position:
+    relative;
+
+  z-index:
+    2;
+
+  min-height:
+    220px;
+
+  padding:
+    20px;
+}
+
+
+/* =====================================================
+   CARD TOP
+   ===================================================== */
+
+.saved-bank-card-top {
+  display:
+    flex;
+
+  align-items:
+    flex-start;
+
+  justify-content:
+    space-between;
+
+  gap:
+    12px;
+}
+
+
+.saved-bank-card-top span {
+  display:
+    block;
+
+  color:
+    #dbeafe;
+
+  font-size:
+    8px;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.14em;
+}
+
+
+.saved-bank-card-top strong {
+  display:
+    block;
+
+  margin-top:
+    6px;
+
+  color:
+    #ffffff;
+
+  font-size:
+    18px;
+
+  font-weight:
+    800;
+}
+
+
+/* =====================================================
+   DELETE BUTTON
+   ===================================================== */
+
+.delete-card-button {
+  height:
+    30px;
+
+  padding:
+    0 10px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.28);
+
+  border-radius:
+    7px;
+
+  background:
+    rgba(255, 255, 255, 0.08);
+
+  color:
+    #ffffff;
+
+  font-size:
+    9px;
+
+  font-weight:
+    700;
+
+  cursor:
+    pointer;
+
+  transition:
+    background 0.17s ease,
+    border-color 0.17s ease;
+}
+
+
+.delete-card-button:hover {
+  background:
+    rgba(220, 38, 38, 0.22);
+
+  border-color:
+    rgba(255, 255, 255, 0.38);
+}
+
+
+/* =====================================================
+   CARD NUMBER
+   ===================================================== */
+
+.saved-bank-card-number {
+  margin-top:
+    40px;
+
+  color:
+    #ffffff;
+
+  font-size:
+    17px;
+
+  font-weight:
+    600;
+
+  letter-spacing:
+    0.11em;
+
+  white-space:
+    nowrap;
+}
+
+
+/* =====================================================
+   CARD BOTTOM
+   ===================================================== */
+
+.saved-bank-card-bottom {
+  position:
+    absolute;
+
+  left:
+    20px;
+
+  right:
+    20px;
+
+  bottom:
+    18px;
+
+  display:
+    flex;
+
+  align-items:
+    flex-end;
+
+  justify-content:
+    space-between;
+}
+
+
+.saved-bank-card-bottom span {
+  display:
+    block;
+
+  color:
+    #c4d4ec;
+
+  font-size:
+    7px;
+
+  font-weight:
+    600;
+
+  letter-spacing:
+    0.10em;
+}
+
+
+.saved-bank-card-bottom strong {
+  display:
+    block;
+
+  margin-top:
+    3px;
+
+  color:
+    #ffffff;
+
+  font-size:
+    12px;
+
+  font-weight:
+    800;
+}
+
+
+/* =====================================================
+   CARD CHIP
+   ===================================================== */
+
+.bank-chip {
+  width:
+    37px;
+
+  height:
+    27px;
+
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      1fr
+    );
+
+  gap:
+    2px;
+
+  padding:
+    4px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.18);
+
+  border-radius:
+    5px;
+
+  background:
+    rgba(255, 255, 255, 0.09);
+}
+
+
+.bank-chip i {
+  border-radius:
+    2px;
+
+  background:
+    rgba(255, 255, 255, 0.80);
+}
+
+
+/* =====================================================
+   LOADING / EMPTY STATE
+   ===================================================== */
+
+.saved-cards-state {
+  min-height:
+    190px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  flex-direction:
+    column;
+
+  padding:
+    25px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.10);
+
+  border-radius:
+    15px;
+
+  background:
+    rgba(18, 31, 49, 0.92);
+
+  color:
+    #ffffff;
+
+  text-align:
+    center;
+}
+
+
+.saved-cards-state p {
+  margin:
+    8px 0 0;
+
+  color:
+    #8d9db3;
+
+  font-size:
+    11px;
+}
+
+
+.saved-cards-state h3 {
+  margin:
+    9px 0 0;
+
+  color:
+    #ffffff;
+
+  font-size:
+    14px;
+}
+
+
+.empty-card-icon {
+  width:
+    40px;
+
+  height:
+    40px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  border-radius:
+    10px;
+
+  background:
+    rgba(255, 255, 255, 0.08);
+
+  color:
+    #9cabbe;
+
+  font-size:
+    20px;
+
+  font-weight:
+    700;
+}
+
+
+.state-spinner {
+  width:
+    30px;
+
+  height:
+    30px;
+
+  border:
+    3px solid
+    rgba(255, 255, 255, 0.12);
+
+  border-top-color:
+    #7757eb;
+
+  border-radius:
+    50%;
+
+  animation:
+    card-state-spin
+    0.8s linear infinite;
+}
+
+
+@keyframes card-state-spin {
+
+  to {
+    transform:
+      rotate(360deg);
+  }
+
+}
+
+
+/* =====================================================
+   TABLET
+   ===================================================== */
+
+@media (max-width: 1049px) {
+
+  .add-card-container {
+    width:
+      calc(100% - 40px);
+  }
+
+  .saved-card-grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 700px) {
+
+  .add-card-container {
+    width:
+      calc(100% - 28px);
+
+    padding:
+      22px 0 14px;
+  }
+
+
+  .add-card-intro h1 {
+    font-size:
+      31px;
+  }
+
+
+  .add-card-intro p {
+    font-size:
+      11px;
+  }
+
+
+  .card-details-panel {
+    padding:
+      21px;
+  }
+
+
+  .card-details-heading {
+    align-items:
+      flex-start;
+
+    flex-direction:
+      column;
+  }
+
+
+  .security-badge {
+    align-self:
+      flex-start;
+  }
+
+
+  .saved-cards-section {
+    margin-top:
+      4px;
+  }
+
+
+  .saved-cards-heading h2 {
+    font-size:
+      22px;
+  }
+
+
+  .saved-card-grid {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .saved-bank-card {
+    min-height:
+      205px;
+  }
+
+
+  .saved-bank-card-content {
+    min-height:
+      205px;
+  }
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+   ===================================================== */
+
+@media (max-width: 480px) {
+
+  .add-card-container {
+    width:
+      calc(100% - 20px);
+
+    padding:
+      17px 0 12px;
+  }
+
+
+  .add-card-intro h1 {
+    font-size:
+      28px;
+  }
+
+
+  .card-details-panel {
+    padding:
+      18px;
+  }
+
+
+  .card-details-heading h2 {
+    font-size:
+      21px;
+  }
+
+
+  .saved-cards-heading {
+    align-items:
+      flex-start;
+
+    flex-direction:
+      column;
+  }
+
+
+  .saved-bank-card-number {
+    font-size:
+      15px;
+
+    letter-spacing:
+      0.09em;
+  }
+
+
+  .saved-bank-card-bottom {
+    left:
+      17px;
+
+    right:
+      17px;
+  }
+
+}

@@ -1,0 +1,1198 @@
+/* =====================================================
+   CARDPAY - TRANSACTION HISTORY
+   SAME DARK STYLE AS DASHBOARD
+   ===================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+
+/* =====================================================
+   PAGE
+   ===================================================== */
+
+.transactions-page {
+  position: relative;
+
+  width: 100%;
+
+  min-height: 0 !important;
+  height: auto !important;
+
+  margin: 0;
+
+  overflow: visible;
+
+  color: #ffffff;
+
+  background:
+    radial-gradient(
+      circle at 82% 8%,
+      rgba(91, 73, 210, 0.20),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 8% 88%,
+      rgba(24, 126, 150, 0.13),
+      transparent 24%
+    ),
+    linear-gradient(
+      135deg,
+      #081321 0%,
+      #0c192b 50%,
+      #081321 100%
+    );
+}
+
+
+/* =====================================================
+   BACKGROUND DECORATION
+   ===================================================== */
+
+.transactions-page::before {
+  content: "";
+
+  position: absolute;
+
+  width: 500px;
+  height: 500px;
+
+  top: -290px;
+  right: -150px;
+
+  border-radius: 50%;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.035);
+
+  box-shadow:
+    0 0 0 38px rgba(255, 255, 255, 0.012),
+    0 0 0 76px rgba(255, 255, 255, 0.007);
+
+  pointer-events: none;
+}
+
+
+.transactions-page::after {
+  content: "";
+
+  position: absolute;
+
+  width: 330px;
+  height: 330px;
+
+  left: -190px;
+  bottom: -210px;
+
+  border-radius: 50%;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.025);
+
+  pointer-events: none;
+}
+
+
+/* =====================================================
+   REMOVE OLD PAGE NAVBAR
+   GLOBAL CARDPAY NAVBAR IS ALREADY PROVIDED
+   ===================================================== */
+
+.transactions-navbar {
+  display: none !important;
+}
+
+
+/* =====================================================
+   MAIN CONTAINER
+   ===================================================== */
+
+.transactions-container {
+  position: relative;
+
+  z-index: 2;
+
+  width:
+    min(
+      calc(100% - 56px),
+      1480px
+    );
+
+  margin: 0 auto;
+
+  padding:
+    28px 0 18px;
+}
+
+
+/* =====================================================
+   PAGE HEADING
+   ===================================================== */
+
+.transactions-heading {
+  margin-bottom: 18px;
+}
+
+
+.heading-overline {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #8da0ba;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+
+  text-transform: uppercase;
+}
+
+
+.transactions-heading h1 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size:
+    clamp(
+      34px,
+      3.5vw,
+      46px
+    );
+
+  line-height: 1.04;
+
+  font-weight: 800;
+
+  letter-spacing: -0.04em;
+}
+
+
+.transactions-heading p {
+  margin:
+    8px
+    0
+    0;
+
+  color: #8ea0b7;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+
+
+/* =====================================================
+   ERROR
+   ===================================================== */
+
+.transactions-error {
+  margin-bottom: 14px;
+
+  padding:
+    10px
+    13px;
+
+  border:
+    1px solid #edcccc;
+
+  border-radius: 8px;
+
+  background: #fff5f5;
+
+  color: #a52a25;
+
+  font-size: 11px;
+}
+
+
+/* =====================================================
+   FILTER PANEL
+   ===================================================== */
+
+.filter-panel {
+  width: 100%;
+
+  margin-bottom: 16px;
+
+  padding:
+    18px
+    20px;
+
+  border:
+    1px solid #d9e1ea;
+
+  border-radius: 15px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f7f9fc 100%
+    );
+
+  color: #172033;
+
+  box-shadow:
+    0 12px 26px
+    rgba(0, 0, 0, 0.16);
+}
+
+
+.filter-heading h2 {
+  margin: 0;
+
+  color: #172033;
+
+  font-size: 20px;
+
+  line-height: 1.1;
+
+  font-weight: 800;
+}
+
+
+.filter-heading p {
+  margin:
+    5px
+    0
+    0;
+
+  color: #718096;
+
+  font-size: 11px;
+}
+
+
+/* =====================================================
+   FILTER GRID
+   ===================================================== */
+
+.filter-grid {
+  display: grid;
+
+  grid-template-columns:
+    1.1fr
+    1fr
+    1fr
+    1fr
+    auto;
+
+  gap: 10px;
+
+  align-items: end;
+
+  margin-top: 14px;
+}
+
+
+.filter-field label {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #344054;
+
+  font-size: 10px;
+
+  font-weight: 750;
+}
+
+
+.filter-field select,
+.filter-field input {
+  width: 100%;
+
+  height: 42px;
+
+  padding:
+    0 11px;
+
+  border:
+    1px solid #ccd6e1;
+
+  border-radius: 8px;
+
+  background:
+    #fbfcfd;
+
+  color:
+    #172033;
+
+  font-size:
+    12px;
+
+  outline:
+    none;
+
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+
+.filter-field select:hover,
+.filter-field input:hover {
+  border-color:
+    #aebdcc;
+}
+
+
+.filter-field select:focus,
+.filter-field input:focus {
+  border-color:
+    #6755c8;
+
+  background:
+    #ffffff;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(103, 85, 200, 0.08);
+}
+
+
+/* =====================================================
+   AMOUNT INPUT
+   ===================================================== */
+
+.amount-input {
+  position: relative;
+}
+
+
+.amount-input span {
+  position: absolute;
+
+  left: 11px;
+  top: 50%;
+
+  transform:
+    translateY(-50%);
+
+  color: #7b8797;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  pointer-events: none;
+}
+
+
+.amount-input input {
+  padding-left:
+    26px;
+}
+
+
+/* =====================================================
+   FILTER BUTTONS
+   ===================================================== */
+
+.filter-buttons {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    7px;
+}
+
+
+.apply-button,
+.clear-button {
+  height:
+    42px;
+
+  padding:
+    0 15px;
+
+  border-radius:
+    8px;
+
+  font-size:
+    11px;
+
+  font-weight:
+    750;
+
+  cursor:
+    pointer;
+
+  white-space:
+    nowrap;
+
+  transition:
+    background 0.17s ease,
+    transform 0.17s ease,
+    border-color 0.17s ease;
+}
+
+
+.apply-button {
+  border:
+    1px solid #111b30;
+
+  background:
+    #111b30;
+
+  color:
+    #ffffff;
+}
+
+
+.apply-button:hover {
+  background:
+    #1c2941;
+
+  transform:
+    translateY(-1px);
+}
+
+
+.clear-button {
+  border:
+    1px solid #ccd6e1;
+
+  background:
+    #ffffff;
+
+  color:
+    #344054;
+}
+
+
+.clear-button:hover {
+  background:
+    #f5f7fa;
+
+  border-color:
+    #b7c2ce;
+}
+
+
+/* =====================================================
+   TRANSACTION PANEL
+   ===================================================== */
+
+.transaction-panel {
+  width:
+    100%;
+
+  overflow:
+    hidden;
+
+  border:
+    1px solid #d9e1ea;
+
+  border-radius:
+    15px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f8fafc 100%
+    );
+
+  color:
+    #172033;
+
+  box-shadow:
+    0 12px 28px
+    rgba(0, 0, 0, 0.16);
+}
+
+
+/* =====================================================
+   PANEL HEADER
+   ===================================================== */
+
+.transaction-panel-header {
+  padding:
+    17px 20px 12px;
+
+  border-bottom:
+    1px solid #e7ebef;
+}
+
+
+.section-overline {
+  display:
+    block;
+
+  margin-bottom:
+    4px;
+
+  color:
+    #7f8da0;
+
+  font-size:
+    8px;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.13em;
+
+  text-transform:
+    uppercase;
+}
+
+
+.transaction-panel-header h2 {
+  margin:
+    0;
+
+  color:
+    #172033;
+
+  font-size:
+    21px;
+
+  line-height:
+    1.1;
+
+  font-weight:
+    800;
+}
+
+
+.transaction-panel-header p {
+  margin:
+    4px 0 0;
+
+  color:
+    #718096;
+
+  font-size:
+    10px;
+}
+
+
+/* =====================================================
+   TABLE WRAPPER
+   ===================================================== */
+
+.table-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+
+  overflow-y: hidden;
+
+  scrollbar-width:
+    thin;
+
+  scrollbar-color:
+    #c2cad4
+    transparent;
+}
+
+
+.table-wrapper::-webkit-scrollbar {
+  height:
+    7px;
+}
+
+
+.table-wrapper::-webkit-scrollbar-track {
+  background:
+    #f2f4f7;
+}
+
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background:
+    #c2cad4;
+
+  border-radius:
+    20px;
+}
+
+
+/* =====================================================
+   TABLE
+   ===================================================== */
+
+.transaction-table {
+  width:
+    100%;
+
+  border-collapse:
+    collapse;
+
+  table-layout:
+    fixed;
+}
+
+
+.transaction-table thead {
+  background:
+    #f5f7fa;
+}
+
+
+.transaction-table th {
+  height:
+    40px;
+
+  padding:
+    0 16px;
+
+  border-bottom:
+    1px solid #e4e9ee;
+
+  color:
+    #69778a;
+
+  font-size:
+    9px;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.04em;
+
+  text-align:
+    left;
+
+  white-space:
+    nowrap;
+}
+
+
+.transaction-table td {
+  height:
+    52px;
+
+  padding:
+    7px 16px;
+
+  border-bottom:
+    1px solid #edf0f3;
+
+  color:
+    #596779;
+
+  font-size:
+    11px;
+
+  vertical-align:
+    middle;
+}
+
+
+.transaction-table tbody tr:last-child td {
+  border-bottom:
+    0;
+}
+
+
+.transaction-table tbody tr {
+  transition:
+    background 0.15s ease;
+}
+
+
+.transaction-table tbody tr:hover {
+  background:
+    #fafbfc;
+}
+
+
+/* =====================================================
+   COLUMN WIDTHS
+   ===================================================== */
+
+.transaction-table th:nth-child(1),
+.transaction-table td:nth-child(1) {
+  width:
+    7%;
+}
+
+
+.transaction-table th:nth-child(2),
+.transaction-table td:nth-child(2) {
+  width:
+    19%;
+}
+
+
+.transaction-table th:nth-child(3),
+.transaction-table td:nth-child(3) {
+  width:
+    13%;
+}
+
+
+.transaction-table th:nth-child(4),
+.transaction-table td:nth-child(4) {
+  width:
+    12%;
+}
+
+
+.transaction-table th:nth-child(5),
+.transaction-table td:nth-child(5) {
+  width:
+    18%;
+}
+
+
+.transaction-table th:nth-child(6),
+.transaction-table td:nth-child(6) {
+  width:
+    31%;
+}
+
+
+/* =====================================================
+   TABLE TEXT
+   ===================================================== */
+
+.id-cell {
+  color:
+    #172033 !important;
+
+  font-weight:
+    750;
+}
+
+
+.card-cell {
+  color:
+    #5d6b7b !important;
+}
+
+
+.amount-cell {
+  color:
+    #172033 !important;
+
+  font-size:
+    12px !important;
+
+  font-weight:
+    750;
+}
+
+
+.date-cell {
+  color:
+    #6b788a !important;
+
+  white-space:
+    nowrap;
+}
+
+
+.reason-cell {
+  color:
+    #69778a !important;
+
+  line-height:
+    1.35;
+}
+
+
+/* =====================================================
+   STATUS
+   ===================================================== */
+
+.status-pill {
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  min-width:
+    66px;
+
+  padding:
+    4px 8px;
+
+  border-radius:
+    999px;
+
+  font-size:
+    9px;
+
+  font-weight:
+    800;
+
+  white-space:
+    nowrap;
+}
+
+
+.status-pill.success {
+  background:
+    #dff6e8;
+
+  color:
+    #16844d;
+}
+
+
+.status-pill.failed {
+  background:
+    #fee1e1;
+
+  color:
+    #c03333;
+}
+
+
+.status-pill.pending {
+  background:
+    #fff1cf;
+
+  color:
+    #a96a0c;
+}
+
+
+/* =====================================================
+   LOADING
+   ===================================================== */
+
+.transactions-loading {
+  min-height:
+    170px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  flex-direction:
+    column;
+}
+
+
+.loading-spinner {
+  width:
+    27px;
+
+  height:
+    27px;
+
+  border:
+    3px solid #dce2e8;
+
+  border-top-color:
+    #6047d8;
+
+  border-radius:
+    50%;
+
+  animation:
+    transaction-spin
+    0.8s linear infinite;
+}
+
+
+.transactions-loading p {
+  margin:
+    7px 0 0;
+
+  color:
+    #7d8998;
+
+  font-size:
+    10px;
+}
+
+
+@keyframes transaction-spin {
+
+  to {
+    transform:
+      rotate(360deg);
+  }
+
+}
+
+
+/* =====================================================
+   EMPTY STATE
+   ===================================================== */
+
+.transactions-empty {
+  min-height:
+    180px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  flex-direction:
+    column;
+
+  text-align:
+    center;
+
+  padding:
+    25px;
+}
+
+
+.empty-icon {
+  width:
+    38px;
+
+  height:
+    38px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  border-radius:
+    9px;
+
+  background:
+    #eef2f6;
+
+  color:
+    #68778a;
+
+  font-size:
+    17px;
+
+  font-weight:
+    700;
+}
+
+
+.transactions-empty h3 {
+  margin:
+    9px 0 0;
+
+  color:
+    #172033;
+
+  font-size:
+    14px;
+}
+
+
+.transactions-empty p {
+  margin:
+    4px 0 0;
+
+  color:
+    #7d8998;
+
+  font-size:
+    10px;
+}
+
+
+/* =====================================================
+   LARGE DESKTOP
+   ===================================================== */
+
+@media (min-width: 1500px) {
+
+  .transactions-container {
+    width:
+      calc(100% - 80px);
+
+    max-width:
+      1500px;
+  }
+
+}
+
+
+/* =====================================================
+   TABLET
+   ===================================================== */
+
+@media (max-width: 1100px) {
+
+  .transactions-container {
+    width:
+      calc(100% - 40px);
+  }
+
+
+  .filter-grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+  }
+
+
+  .filter-buttons {
+    grid-column:
+      1 / -1;
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 700px) {
+
+  .transactions-container {
+    width:
+      calc(100% - 28px);
+
+    padding:
+      22px 0 14px;
+  }
+
+
+  .transactions-heading h1 {
+    font-size:
+      31px;
+  }
+
+
+  .transactions-heading p {
+    font-size:
+      11px;
+  }
+
+
+  .filter-panel {
+    padding:
+      17px;
+  }
+
+
+  .filter-heading h2 {
+    font-size:
+      18px;
+  }
+
+
+  .filter-grid {
+    grid-template-columns:
+      1fr;
+
+    gap:
+      11px;
+  }
+
+
+  .filter-buttons {
+    grid-column:
+      auto;
+
+    width:
+      100%;
+  }
+
+
+  .apply-button,
+  .clear-button {
+    flex:
+      1;
+
+    min-width:
+      0;
+  }
+
+
+  .transaction-panel-header {
+    padding:
+      15px;
+  }
+
+
+  .transaction-panel-header h2 {
+    font-size:
+      19px;
+  }
+
+
+  .table-wrapper {
+    overflow-x:
+      auto;
+  }
+
+
+  .transaction-table {
+    min-width:
+      960px;
+  }
+
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+   ===================================================== */
+
+@media (max-width: 480px) {
+
+  .transactions-container {
+    width:
+      calc(100% - 20px);
+
+    padding:
+      17px 0 12px;
+  }
+
+
+  .transactions-heading h1 {
+    font-size:
+      28px;
+  }
+
+
+  .filter-panel {
+    padding:
+      15px;
+  }
+
+
+  .transaction-panel {
+    border-radius:
+      13px;
+  }
+
+
+  .status-pill {
+    min-width:
+      62px;
+  }
+
+}
