@@ -199,12 +199,26 @@ def add_card(request):
     # Create masked card number
     masked_card_number = "**** **** **** " + last_four_digits
 
-    # Store only masked number and last 4 digits
+    # -----------------------------------------------------
+    # CREDIT LIMIT
+    # -----------------------------------------------------
+    # Credit cards receive the standard ₹1,00,000 limit.
+    # Debit cards do not have a credit limit.
+    # The user cannot provide or modify this value.
+    # -----------------------------------------------------
+
+    if card_type == 'credit':
+        credit_limit = 100000.00
+    else:
+        credit_limit = 0.00
+
+    # Create card
     card = Card.objects.create(
         user=request.user,
         card_type=card_type,
         masked_card_number=masked_card_number,
-        last_four_digits=last_four_digits
+        last_four_digits=last_four_digits,
+        credit_limit=credit_limit
     )
 
     return Response(

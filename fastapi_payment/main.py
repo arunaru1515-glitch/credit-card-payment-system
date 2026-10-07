@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from routers.auth_router import router as auth_router
 from routers.card_router import router as card_router
 from routers.payment_router import router as payment_router
+from routers.dashboard_router import router as dashboard_router
 
 
 # ==================================================
@@ -25,6 +26,11 @@ tags_metadata = [
     {
         "name": "Payments",
         "description": "Payment processing",
+    },
+
+    {
+        "name": "Dashboard",
+        "description": "User dashboard transaction summary",
     },
 
 ]
@@ -84,3 +90,4 @@ def home():
 app.include_router(auth_router)
 app.include_router(card_router)
 app.include_router(payment_router)
+app.include_router(dashboard_router)

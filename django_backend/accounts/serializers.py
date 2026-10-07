@@ -55,9 +55,11 @@ class CardSerializer(serializers.ModelSerializer):
             'card_type',
             'masked_card_number',
             'last_four_digits',
+            'credit_limit',
             'created_at'
         ]
         read_only_fields = [
             'id',
+            'credit_limit',
             'created_at'
         ]

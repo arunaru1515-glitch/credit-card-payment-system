@@ -4,6 +4,7 @@ from .views import (
     TransactionHistoryView,
     create_pending_transaction,
     update_transaction_status,
+    dashboard_summary,
 )
 
 urlpatterns = [
@@ -21,5 +22,10 @@ urlpatterns = [
         "<int:transaction_id>/status/",
         update_transaction_status,
         name="update-transaction-status",
+    ),
+    path(
+        "dashboard/summary/",
+        dashboard_summary,
+        name="dashboard-summary",
     ),
 ]

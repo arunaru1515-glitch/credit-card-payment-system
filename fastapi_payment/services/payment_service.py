@@ -15,13 +15,6 @@ DJANGO_BASE_URL = os.getenv(
 
 
 # ==================================================
-# SIMULATED PAYMENT LIMIT
-# ==================================================
-
-SIMULATED_PAYMENT_LIMIT = Decimal("100000.00")
-
-
-# ==================================================
 # PROCESS PAYMENT
 # ==================================================
 
@@ -30,10 +23,19 @@ async def process_payment(
     amount: Decimal,
     authorization: str
 ):
+
     async with httpx.AsyncClient() as client:
 
         # ==================================================
         # STEP 1: CREATE TRANSACTION WITH PENDING STATUS
+        # ==================================================
+        #
+        # Django performs:
+        # - Card ownership validation
+        # - Card-wise credit limit validation
+        # - Available credit calculation
+        # - Pending transaction creation
+        #
         # ==================================================
 
         create_response = await client.post(
@@ -46,6 +48,10 @@ async def process_payment(
                 "Authorization": authorization
             }
         )
+
+        # --------------------------------------------------
+        # HANDLE PAYMENT VALIDATION FAILURE
+        # --------------------------------------------------
 
         if create_response.status_code >= 400:
 
@@ -62,33 +68,27 @@ async def process_payment(
                 "error": error_data
             }
 
-
         pending_data = create_response.json()
 
         transaction = pending_data["transaction"]
 
         transaction_id = transaction["id"]
 
-
         # ==================================================
-        # STEP 2: APPLY SIMULATED PAYMENT GATEWAY RULE
+        # STEP 2: PAYMENT PROCESSING
+        # ==================================================
+        #
+        # Credit-limit validation has already been completed
+        # by Django.
+        #
+        # If we reached this point, the selected card has
+        # sufficient available credit.
+        #
         # ==================================================
 
-        if amount > SIMULATED_PAYMENT_LIMIT:
+        final_status = "SUCCESS"
 
-            final_status = "FAILED"
-
-            failure_reason = (
-                "Payment declined because the amount exceeds "
-                "the simulated gateway limit of ₹100,000"
-            )
-
-        else:
-
-            final_status = "SUCCESS"
-
-            failure_reason = None
-
+        failure_reason = None
 
         # ==================================================
         # STEP 3: UPDATE TRANSACTION STATUS
@@ -98,11 +98,8 @@ async def process_payment(
             "status": final_status
         }
 
-
         if failure_reason:
-
             update_payload["failure_reason"] = failure_reason
-
 
         update_response = await client.patch(
             f"{DJANGO_BASE_URL}/api/transactions/"
@@ -113,6 +110,9 @@ async def process_payment(
             }
         )
 
+        # --------------------------------------------------
+        # HANDLE STATUS UPDATE FAILURE
+        # --------------------------------------------------
 
         if update_response.status_code >= 400:
 
@@ -130,9 +130,7 @@ async def process_payment(
                 "transaction_id": transaction_id
             }
 
-
         updated_data = update_response.json()
-
 
         # ==================================================
         # FINAL RESPONSE

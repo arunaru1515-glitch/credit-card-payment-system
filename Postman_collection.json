@@ -302,6 +302,51 @@
           "response": []
         },
         {
+          "name": "Dashboard Summary",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Dashboard summary returned 200', function () { pm.response.to.have.status(200); });",
+                  "const data = pm.response.json();",
+                  "pm.test('Required dashboard fields are present', function () {",
+                  "    pm.expect(data).to.have.property('total_transactions');",
+                  "    pm.expect(data).to.have.property('total_amount_spent');",
+                  "    pm.expect(data).to.have.property('current_month_spending');",
+                  "    pm.expect(data).to.have.property('available_credit_limit');",
+                  "    pm.expect(data).to.have.property('last_5_transactions');",
+                  "});",
+                  "pm.test('Last 5 transactions is an array', function () {",
+                  "    pm.expect(data.last_5_transactions).to.be.an('array');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{fastapi_base_url}}/dashboard/summary",
+              "host": [
+                "{{fastapi_base_url}}"
+              ],
+              "path": [
+                "dashboard",
+                "summary"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
           "name": "FastAPI Swagger",
           "request": {
             "method": "GET",
@@ -584,7 +629,7 @@
     },
     {
       "key": "card_id",
-      "value": "1"
+      "value": "3"
     },
     {
       "key": "transaction_id",
