@@ -1,4 +1,4 @@
-**# Credit Card Payment System**
+# Credit Card Payment System
 
 
 
@@ -10,223 +10,236 @@ The application supports secure user authentication, credit/debit card managemen
 
 
 
-**---**
+---
 
 
 
-**## 1. Features**
+## 1. Features
 
 
 
-**### User Authentication**
+### User Authentication
 
 
 
-\- User registration
+- User registration
 
-\- JWT-based login
+- JWT-based login
 
-\- JWT token authentication
+- JWT token authentication
 
-\- Logout with refresh-token blacklisting
+- Logout with refresh-token blacklisting
 
-\- Protected user profile
+- Protected user profile
 
-\- Encrypted password storage
+- Encrypted password storage
 
 
 
-**### Card Management**
+### Card Management
 
 
 
-\- Add credit card
+- Add credit card
 
-\- Add debit card
+- Add debit card
 
-\- View saved cards
+- View saved cards
 
-\- Delete saved cards
+- Delete saved cards
 
-\- Card number masking
+- Card number masking
 
-\- Only masked card number and last four digits are stored
+- Only masked card number and last four digits are stored
 
-\- CVV is not stored
+- CVV is not stored
 
 
 
-**### Payment Processing**
+### Payment Processing
 
 
 
-\- Payment processing through FastAPI
+- Payment processing through FastAPI
 
-\- Initial \`PENDING\` transaction status
+- Initial `PENDING` transaction status
 
-\- Simulated payment gateway processing
+- Simulated payment gateway processing
 
-\- \`SUCCESS\` payment status
+- `SUCCESS` payment status
 
-\- \`FAILED\` payment status
+- `FAILED` payment status
 
-\- Failure reason for declined payments
+- Failure reason for declined payments
 
 
 
-**### Transaction Management**
+### User Dashboard
 
+- Real-time dashboard summary
+- Total transaction count
+- Total successful amount spent
+- Current month spending
+- Available credit across saved credit cards
+- Last 5 transactions
+- Masked card numbers in dashboard results
+- JWT-protected dashboard API
+- Loading skeleton while dashboard data is fetched
+- JWT error handling in the React dashboard
 
+### Transaction Management
 
-\- View transaction history
 
-\- Filter by status
 
-\- Filter by minimum amount
+- View transaction history
 
-\- Filter by maximum amount
+- Filter by status
 
-\- Filter by date
+- Filter by minimum amount
 
-\- Transaction ownership protection
+- Filter by maximum amount
 
-\- Admin transaction management
+- Filter by date
 
-\- CSV export support
+- Transaction ownership protection
 
+- Admin transaction management
 
+- CSV export support
 
-**### Admin Panel**
 
 
+### Admin Panel
 
-\- Manage users
 
-\- Manage cards
 
-\- View transactions
+- Manage users
 
-\- Daily payment summary
+- Manage cards
 
-\- Django administration interface
+- View transactions
 
+- Daily payment summary
 
+- Django administration interface
 
-**### Frontend**
 
 
+### Frontend
 
-\- Register
 
-\- Login
 
-\- Dashboard
+- Register
 
-\- Add Card
+- Login
 
-\- Make Payment
+- Dashboard
 
-\- Transaction History
+- Add Card
 
-\- Admin Dashboard
+- Make Payment
 
-\- Responsive fintech-style UI
+- Transaction History
 
+- Admin Dashboard
 
+- Responsive fintech-style UI
 
-**### API Documentation**
 
 
+### API Documentation
 
-\- FastAPI Swagger UI
 
-\- OpenAPI documentation
 
-\- Protected API endpoints
+- FastAPI Swagger UI
 
-\- Postman testing support
+- OpenAPI documentation
 
+- Protected API endpoints
 
+- Postman testing support
 
-**### Testing**
 
 
+### Testing
 
-\- Authentication tests
 
-\- Card management tests
 
-\- Transaction tests
+- Authentication tests
 
-\- Payment API tests
+- Card management tests
 
-\- Payment service tests
+- Transaction tests
 
-\- Django test coverage
+- Payment API tests
 
-\- FastAPI test coverage
+- Payment service tests
 
+- Django test coverage
 
+- FastAPI test coverage
 
-**### Docker**
 
 
+### Docker
 
-\- Dockerized Django backend
 
-\- Dockerized FastAPI backend
 
-\- Dockerized React frontend
+- Dockerized Django backend
 
-\- Dockerized MySQL database
+- Dockerized FastAPI backend
 
-\- Docker Compose orchestration
+- Dockerized React frontend
 
+- Dockerized MySQL database
 
+- Docker Compose orchestration
 
-**---**
 
 
+---
 
-**## 2. Technology Stack**
 
 
+## 2. Technology Stack
 
-\| Layer | Technology |
 
-\|---|---|
 
-\| Frontend | React, Tailwind CSS, Vite |
+| Layer | Technology |
 
-\| Backend | Django, Django REST Framework |
+|---|---|
 
-\| Payment Service | FastAPI |
+| Frontend | React, Tailwind CSS, Vite |
 
-\| Database | MySQL |
+| Backend | Django, Django REST Framework |
 
-\| Authentication | JWT / Simple JWT |
+| Payment Service | FastAPI |
 
-\| API Documentation | Swagger / OpenAPI |
+| Database | MySQL |
 
-\| Testing | Django TestCase, unittest, coverage |
+| Authentication | JWT / Simple JWT |
 
-\| Web Server | Nginx |
+| API Documentation | Swagger / OpenAPI |
 
-\| Containerization | Docker, Docker Compose |
+| Testing | Django TestCase, unittest, coverage |
 
-\| Version Control | Git, GitHub |
+| Web Server | Nginx |
 
+| Containerization | Docker, Docker Compose |
 
+| Version Control | Git, GitHub |
 
-**---**
 
 
+---
 
-**## 3. Project Structure**
 
 
+## 3. Project Structure
 
-\`\`\`text
+
+
+```text
 
 credit_card_payment_system/
 
@@ -396,19 +409,19 @@ credit_card_payment_system/
 
 └── README.md
 
-\`\`\`
+```
 
 
 
-**---**
+---
 
 
 
-**## 4. System Architecture**
+## 4. System Architecture
 
 
 
-\`\`\`text
+```text
 
                     ┌──────────────────────┐
 
@@ -460,19 +473,19 @@ credit_card_payment_system/
 
                     └──────────────────────┘
 
-\`\`\`
+```
 
 
 
-**---**
+---
 
 
 
-**## 5. Database Schema**
+## 5. Database Schema
 
 
 
-**### Users**
+### Users
 
 
 
@@ -480,23 +493,23 @@ Stores application user information and authentication details.
 
 
 
-\| Field | Description |
+| Field | Description |
 
-\|---|---|
+|---|---|
 
-\| ID | Unique user identifier |
+| ID | Unique user identifier |
 
-\| Username | User login name |
+| Username | User login name |
 
-\| Email | Unique email address |
+| Email | Unique email address |
 
-\| Password | Encrypted password |
+| Password | Encrypted password |
 
-\| Date Joined | Account creation date |
+| Date Joined | Account creation date |
 
 
 
-**### Cards**
+### Cards
 
 
 
@@ -504,25 +517,25 @@ Stores saved credit/debit card information without storing the actual card numbe
 
 
 
-\| Field | Description |
+| Field | Description |
 
-\|---|---|
+|---|---|
 
-\| ID | Unique card identifier |
+| ID | Unique card identifier |
 
-\| User | Card owner |
+| User | Card owner |
 
-\| Card Type | Credit / Debit |
+| Card Type | Credit / Debit |
 
-\| Masked Card Number | Masked representation |
+| Masked Card Number | Masked representation |
 
-\| Last Four Digits | Last four digits of card |
+| Last Four Digits | Last four digits of card |
 
-\| Created At | Card creation timestamp |
+| Created At | Card creation timestamp |
 
 
 
-**### Transactions**
+### Transactions
 
 
 
@@ -530,35 +543,35 @@ Stores payment and transaction information.
 
 
 
-\| Field | Description |
+| Field | Description |
 
-\|---|---|
+|---|---|
 
-\| ID | Unique transaction identifier |
+| ID | Unique transaction identifier |
 
-\| User | Transaction owner |
+| User | Transaction owner |
 
-\| Card | Associated saved card |
+| Card | Associated saved card |
 
-\| Amount | Payment amount |
+| Amount | Payment amount |
 
-\| Status | PENDING / SUCCESS / FAILED |
+| Status | PENDING / SUCCESS / FAILED |
 
-\| Failure Reason | Reason for failed transaction |
+| Failure Reason | Reason for failed transaction |
 
-\| Transaction Date | Transaction timestamp |
-
-
-
-**---**
+| Transaction Date | Transaction timestamp |
 
 
 
-**## 6. Authentication Flow**
+---
 
 
 
-\`\`\`text
+## 6. Authentication Flow
+
+
+
+```text
 
 Register
 
@@ -586,7 +599,7 @@ Logout
 
 Refresh Token Blacklisted
 
-\`\`\`
+```
 
 
 
@@ -598,23 +611,23 @@ Example:
 
 
 
-\`\`\`http
+```http
 
-Authorization: Bearer \<access_token>
+Authorization: Bearer <access_token>
 
-\`\`\`
-
-
-
-**---**
+```
 
 
 
-**## 7. Payment Flow**
+---
 
 
 
-\`\`\`text
+## 7. Payment Flow
+
+
+
+```text
 
 React Frontend
 
@@ -650,23 +663,23 @@ SUCCESS        FAILED
 
           Failure Reason
 
-\`\`\`
+```
 
 
 
-Payments start with a \`PENDING\` status and are finally updated to either \`SUCCESS\` or \`FAILED\`.
+Payments start with a `PENDING` status and are finally updated to either `SUCCESS` or `FAILED`.
 
 
 
-**---**
+---
 
 
 
-**## 8. API Documentation**
+## 8. API Documentation
 
 
 
-**### FastAPI Swagger**
+### FastAPI Swagger
 
 
 
@@ -674,15 +687,15 @@ FastAPI provides interactive Swagger/OpenAPI documentation.
 
 
 
-\`\`\`text
+```text
 
 http\://localhost:8001/docs
 
-\`\`\`
+```
 
 
 
-**### Django REST API**
+### Django REST API
 
 
 
@@ -694,19 +707,19 @@ Django API endpoints are also tested through the supplied Postman collection.
 
 
 
-**---**
+---
 
 
 
-**## 9. Main API Operations**
+## 9. Main API Operations
 
 
 
-**### Authentication**
+### Authentication
 
 
 
-\`\`\`text
+```text
 
 POST /api/register/
 
@@ -716,59 +729,59 @@ POST /api/logout/
 
 GET  /api/profile/
 
-\`\`\`
+```
 
 
 
-**### Card Management**
+### Card Management
 
 
 
-\`\`\`text
+```text
 
 POST   /api/cards/
 
 GET    /api/cards/
 
-DELETE /api/cards/\<id>/
+DELETE /api/cards/<id>/
 
-\`\`\`
-
-
-
-**### Transactions**
+```
 
 
 
-\`\`\`text
+### Transactions
+
+
+
+```text
 
 GET   /api/transactions/
 
 POST  /api/transactions/create/
 
-PATCH /api/transactions/\<id>/status/
+PATCH /api/transactions/<id>/status/
 
-\`\`\`
-
-
-
-**### Payment**
+```
 
 
 
-\`\`\`text
+### Payment
+
+
+
+```text
 
 POST /payments/
 
-\`\`\`
+```
 
 
 
-**---**
+---
 
 
 
-**## 10. Postman Collection**
+## 10. Postman Collection
 
 
 
@@ -784,31 +797,31 @@ The collection contains requests for:
 
 
 
-\- Authentication
+- Authentication
 
-\- User profile
+- User profile
 
-\- Card management
+- Card management
 
-\- Payment processing
+- Payment processing
 
-\- Successful payment
+- Successful payment
 
-\- Failed payment
+- Failed payment
 
-\- Transaction history
+- Transaction history
 
-\- Transaction filtering
+- Transaction filtering
 
-\- Logout
-
-
-
-**---**
+- Logout
 
 
 
-**## 11. Running the Project with Docker**
+---
+
+
+
+## 11. Running the Project with Docker
 
 
 
@@ -820,11 +833,11 @@ From the project root:
 
 
 
-\`\`\`bash
+```bash
 
 docker compose up --build
 
-\`\`\`
+```
 
 
 
@@ -832,11 +845,11 @@ To run the containers in detached mode:
 
 
 
-\`\`\`bash
+```bash
 
 docker compose up -d --build
 
-\`\`\`
+```
 
 
 
@@ -844,11 +857,11 @@ To check running containers:
 
 
 
-\`\`\`bash
+```bash
 
 docker compose ps
 
-\`\`\`
+```
 
 
 
@@ -856,23 +869,23 @@ To stop the project:
 
 
 
-\`\`\`bash
+```bash
 
 docker compose down
 
-\`\`\`
+```
 
 
 
-\> Do not use \`docker compose down -v\` unless you intentionally want to remove Docker volumes and database data.
+> Do not use `docker compose down -v` unless you intentionally want to remove Docker volumes and database data.
 
 
 
-**---**
+---
 
 
 
-**## 12. Application Services**
+## 12. Application Services
 
 
 
@@ -880,7 +893,7 @@ The project consists of:
 
 
 
-\`\`\`text
+```text
 
 Frontend
 
@@ -890,7 +903,7 @@ FastAPI Payment Service
 
 MySQL Database
 
-\`\`\`
+```
 
 
 
@@ -898,27 +911,27 @@ The service configuration and ports are defined in:
 
 
 
-\`\`\`text
+```text
 
 docker-compose.yml
 
-\`\`\`
+```
 
 
 
-**---**
+---
 
 
 
-**## 13. Local Development**
+## 13. Local Development
 
 
 
-**### Django Backend**
+### Django Backend
 
 
 
-\`\`\`bash
+```bash
 
 cd django_backend
 
@@ -926,29 +939,29 @@ python manage.py migrate
 
 python manage.py runserver
 
-\`\`\`
+```
 
 
 
-**### FastAPI Backend**
+### FastAPI Backend
 
 
 
-\`\`\`bash
+```bash
 
 cd fastapi_payment
 
 uvicorn main:app --reload
 
-\`\`\`
+```
 
 
 
-**### Frontend**
+### Frontend
 
 
 
-\`\`\`bash
+```bash
 
 cd frontend
 
@@ -956,43 +969,43 @@ npm install
 
 npm run dev
 
-\`\`\`
+```
 
 
 
-**---**
+---
 
 
 
-**## 14. Testing**
+## 14. Testing
 
 
 
-**### Django Tests**
+### Django Tests
 
 
 
-\`\`\`bash
+```bash
 
 cd django_backend
 
 python manage.py test
 
-\`\`\`
+```
 
 
 
-**### FastAPI Tests**
+### FastAPI Tests
 
 
 
-\`\`\`bash
+```bash
 
 cd fastapi_payment
 
 pytest
 
-\`\`\`
+```
 
 
 
@@ -1000,11 +1013,11 @@ The project contains tests covering authentication, card management, transaction
 
 
 
-**---**
+---
 
 
 
-**## 15. Security**
+## 15. Security
 
 
 
@@ -1012,31 +1025,31 @@ The application follows the required security rules:
 
 
 
-\- CVV is not stored
+- CVV is not stored
 
-\- Actual card numbers are not stored
+- Actual card numbers are not stored
 
-\- Passwords are encrypted
+- Passwords are encrypted
 
-\- JWT authentication is used
+- JWT authentication is used
 
-\- Protected routes require authentication
+- Protected routes require authentication
 
-\- Input validation is implemented
+- Input validation is implemented
 
-\- Django ORM is used for database access
+- Django ORM is used for database access
 
-\- Transaction ownership is validated
+- Transaction ownership is validated
 
-\- Refresh-token blacklisting is implemented during logout
-
-
-
-**---**
+- Refresh-token blacklisting is implemented during logout
 
 
 
-**## 16. Admin Panel**
+---
+
+
+
+## 16. Admin Panel
 
 
 
@@ -1044,15 +1057,15 @@ The Django administration interface provides:
 
 
 
-\- User management
+- User management
 
-\- Card management
+- Card management
 
-\- Transaction management
+- Transaction management
 
-\- Payment summary
+- Payment summary
 
-\- Administrative operations
+- Administrative operations
 
 
 
@@ -1060,23 +1073,23 @@ Admin URL:
 
 
 
-\`\`\`text
+```text
 
 http\://localhost:8000/admin/
 
-\`\`\`
+```
 
 
 
-**---**
+---
 
 
 
-**## 17. Screenshots**
+## 17. Screenshots
 
 
 
-**### Login**
+### Login
 
 
 
@@ -1084,7 +1097,7 @@ http\://localhost:8000/admin/
 
 
 
-**### Register**
+### Register
 
 
 
@@ -1092,7 +1105,7 @@ http\://localhost:8000/admin/
 
 
 
-**### Dashboard**
+### Dashboard
 
 
 
@@ -1100,7 +1113,7 @@ http\://localhost:8000/admin/
 
 
 
-**### Add Card**
+### Add Card
 
 
 
@@ -1108,7 +1121,7 @@ http\://localhost:8000/admin/
 
 
 
-**### Make Payment**
+### Make Payment
 
 
 
@@ -1116,7 +1129,7 @@ http\://localhost:8000/admin/
 
 
 
-**### Transactions**
+### Transactions
 
 
 
@@ -1124,7 +1137,7 @@ http\://localhost:8000/admin/
 
 
 
-**### Admin Dashboard**
+### Admin Dashboard
 
 
 
@@ -1132,7 +1145,7 @@ http\://localhost:8000/admin/
 
 
 
-**### Django Admin Panel**
+### Django Admin Panel
 
 
 
@@ -1140,7 +1153,7 @@ http\://localhost:8000/admin/
 
 
 
-**### Docker Desktop**
+### Docker Desktop
 
 
 
@@ -1148,7 +1161,7 @@ http\://localhost:8000/admin/
 
 
 
-**### FastAPI Swagger**
+### FastAPI Swagger
 
 
 
@@ -1156,7 +1169,7 @@ http\://localhost:8000/admin/
 
 
 
-**### Postman Testing**
+### Postman Testing
 
 
 
@@ -1164,7 +1177,7 @@ http\://localhost:8000/admin/
 
 
 
-**---**
+---
 
 
 
@@ -1210,49 +1223,49 @@ https\://github.com/arunaru1515-glitch/credit-card-payment-system
 
 
 
-**---**
+---
 
 
 
-**## 19. Project Requirements Coverage**
+## 19. Project Requirements Coverage
 
 
 
-\| Module | Status |
+| Module | Status |
 
-\|---|---|
+|---|---|
 
-\| User Authentication | Completed |
+| User Authentication | Completed |
 
-\| Card Management | Completed |
+| Card Management | Completed |
 
-\| Payment Processing | Completed |
+| Payment Processing | Completed |
 
-\| Transaction Management | Completed |
+| Transaction Management | Completed |
 
-\| Admin Panel | Completed |
+| Admin Panel | Completed |
 
-\| React Frontend | Completed |
+| React Frontend | Completed |
 
-\| MySQL Database | Completed |
+| MySQL Database | Completed |
 
-\| Security Requirements | Completed |
+| Security Requirements | Completed |
 
-\| API Documentation | Completed |
+| API Documentation | Completed |
 
-\| Docker Deployment | Completed |
+| Docker Deployment | Completed |
 
-\| Testing | Completed |
+| Testing | Completed |
 
-\| Git & Documentation | Completed |
-
-
-
-**---**
+| Git & Documentation | Completed |
 
 
 
-**## 20. Final Submission**
+---
+
+
+
+## 20. Final Submission
 
 
 
@@ -1260,18 +1273,18 @@ The project includes:
 
 
 
-\- GitHub repository
+- GitHub repository
 
-\- Docker configuration
+- Docker configuration
 
-\- Postman collection
+- Postman collection
 
-\- UI screenshots
+- UI screenshots
 
-\- Django Admin screenshot
+- Django Admin screenshot
 
-\- FastAPI Swagger screenshot
+- FastAPI Swagger screenshot
 
-\- Docker running screenshot
+- Docker running screenshot
 
-\- Project documentation
+- Project documentation
