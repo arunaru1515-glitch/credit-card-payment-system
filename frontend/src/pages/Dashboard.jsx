@@ -162,6 +162,83 @@ function Dashboard() {
     }
   };
 
+  // ==========================================
+  // DOWNLOAD MONTHLY STATEMENT
+  // ==========================================
+
+  const downloadMonthlyStatement = async () => {
+    try {
+      setError("");
+
+      const response = await fetch(
+        `${DJANGO_BASE_URL}/api/transactions/monthly-statement/`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      // JWT authentication error
+      if (response.status === 401) {
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        localStorage.removeItem("username");
+
+        navigate("/login");
+        return;
+      }
+
+      // API error
+      if (!response.ok) {
+        const errorData =
+          await response.json().catch(() => ({}));
+
+        throw new Error(
+          errorData.detail ||
+            errorData.error ||
+            "Unable to generate monthly statement."
+        );
+      }
+
+      // Convert response to PDF blob
+      const blob = await response.blob();
+
+      // Create temporary download URL
+      const url =
+        window.URL.createObjectURL(blob);
+
+      // Create download link
+      const link =
+        document.createElement("a");
+
+      link.href = url;
+      link.download =
+        "monthly_statement.pdf";
+
+      document.body.appendChild(link);
+
+      link.click();
+
+      link.remove();
+
+      // Clean up temporary URL
+      window.URL.revokeObjectURL(url);
+
+    } catch (err) {
+      console.error(
+        "Monthly statement error:",
+        err
+      );
+
+      setError(
+        err.message ||
+          "Unable to download monthly statement."
+      );
+    }
+  };
+
   // Last 5 transactions
   const recentTransactions =
     dashboardData.last_5_transactions || [];
@@ -256,6 +333,16 @@ function Dashboard() {
               transactions, and account activity
               from one place.
             </p>
+
+            {/* MONTHLY STATEMENT BUTTON */}
+
+            <button
+              type="button"
+              className="statement-download-button"
+              onClick={downloadMonthlyStatement}
+            >
+              Download Monthly Statement
+            </button>
 
           </div>
 
@@ -595,9 +682,7 @@ function Dashboard() {
 
         <section className="dashboard-lower-grid">
 
-          {/* ===================================
-              SAVED CARDS
-          ==================================== */}
+          {/* SAVED CARDS */}
 
           <div className="dashboard-panel">
 
@@ -743,9 +828,7 @@ function Dashboard() {
 
           </div>
 
-          {/* ===================================
-              LAST 5 TRANSACTIONS
-          ==================================== */}
+          {/* LAST 5 TRANSACTIONS */}
 
           <div className="dashboard-panel">
 
@@ -894,8 +977,7 @@ function Dashboard() {
                     {failedTransactions.length} failed payment
                     {failedTransactions.length > 1
                       ? "s"
-                      : ""}
-                    .
+                      : ""}.
                   </span>
 
                 </div>

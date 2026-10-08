@@ -8,12 +8,15 @@ import {
 } from "react-router";
 
 import "./AppLayout.css";
+import { useTheme } from "./ThemeContext.jsx";
 
 const DJANGO_BASE_URL = "http://127.0.0.1:8000";
 
 function AppLayout() {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const { theme, toggleTheme } = useTheme();
 
   const [username, setUsername] = useState("Arun");
 
@@ -249,11 +252,39 @@ function AppLayout() {
 
         <div className="navbar-user">
 
+          {/* THEME TOGGLE */}
+
+          <button
+            type="button"
+            className="theme-toggle"
+            onClick={toggleTheme}
+            aria-label={`Switch to ${
+              theme === "light"
+                ? "dark"
+                : "light"
+            } mode`}
+            title={
+              theme === "light"
+                ? "Switch to dark mode"
+                : "Switch to light mode"
+            }
+          >
+            {theme === "light"
+              ? "🌙"
+              : "☀️"}
+          </button>
+
+
+          {/* USER AVATAR */}
+
           <div className="navbar-avatar">
             {username
               .charAt(0)
               .toUpperCase()}
           </div>
+
+
+          {/* USER INFORMATION */}
 
           <div className="navbar-user-info">
 
@@ -266,6 +297,9 @@ function AppLayout() {
             </span>
 
           </div>
+
+
+          {/* LOGOUT */}
 
           <button
             type="button"

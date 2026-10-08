@@ -5,7 +5,64 @@
 :root {
   --navbar-height: 78px;
   --footer-height: 58px;
+
+  /* LIGHT THEME */
+  --app-bg: #f5f7fa;
+  --app-text: #111827;
+
+  --navbar-bg: #ffffff;
+  --navbar-border: #e5e7eb;
+
+  --nav-text: #64748b;
+  --nav-hover-bg: #f1f5f9;
+  --nav-hover-text: #111827;
+
+  --footer-bg: #ffffff;
+  --footer-text: #64748b;
+
+  --logout-border: #d1d5db;
+  --logout-text: #374151;
+  --logout-hover-bg: #f1f5f9;
+
+  --theme-button-bg: #f1f5f9;
+  --theme-button-border: #d1d5db;
+  --theme-button-text: #111827;
+
+  --shadow-color: rgba(0, 0, 0, 0.08);
 }
+
+/* =====================================================
+   DARK THEME
+   ===================================================== */
+
+[data-theme="dark"] {
+  --app-bg: #081321;
+  --app-text: #ffffff;
+
+  --navbar-bg: #041125;
+  --navbar-border: rgba(255, 255, 255, 0.07);
+
+  --nav-text: #aebbd0;
+  --nav-hover-bg: rgba(255, 255, 255, 0.055);
+  --nav-hover-text: #ffffff;
+
+  --footer-bg: #0b1627;
+  --footer-text: #718199;
+
+  --logout-border: #33435d;
+  --logout-text: #ffffff;
+  --logout-hover-bg: #17243a;
+
+  --theme-button-bg: #17243a;
+  --theme-button-border: #33435d;
+  --theme-button-text: #ffffff;
+
+  --shadow-color: rgba(0, 0, 0, 0.25);
+}
+
+/* =====================================================
+   GLOBAL
+   ===================================================== */
 
 * {
   box-sizing: border-box;
@@ -23,7 +80,7 @@ body,
 }
 
 html {
-  background: #081321;
+  background: var(--app-bg);
 }
 
 body {
@@ -33,7 +90,9 @@ body {
 
   overflow-x: hidden;
 
-  background: #081321;
+  background: var(--app-bg);
+
+  color: var(--app-text);
 
   font-family:
     Inter,
@@ -42,8 +101,11 @@ body {
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
-}
 
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
 
 /* =====================================================
    APP SHELL
@@ -57,11 +119,14 @@ body {
   display: flex;
   flex-direction: column;
 
-  background: #081321;
+  background: var(--app-bg);
 
-  color: #ffffff;
+  color: var(--app-text);
+
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
-
 
 /* =====================================================
    GLOBAL NAVBAR
@@ -93,17 +158,20 @@ body {
   padding:
     0 34px;
 
-  background: #041125;
+  background: var(--navbar-bg);
 
   border-bottom:
     1px solid
-    rgba(255, 255, 255, 0.07);
+    var(--navbar-border);
 
   box-shadow:
     0 4px 16px
-    rgba(0, 0, 0, 0.18);
-}
+    var(--shadow-color);
 
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
 
 /* =====================================================
    BRAND
@@ -118,13 +186,13 @@ body {
 
   gap: 11px;
 
-  color: #ffffff;
+  color: var(--app-text);
 
   text-decoration: none;
 }
 
 .main-brand:hover {
-  color: #ffffff;
+  color: var(--app-text);
 }
 
 .main-brand-icon {
@@ -161,7 +229,7 @@ body {
 .main-brand-text strong {
   display: block;
 
-  color: #ffffff;
+  color: var(--app-text);
 
   font-size: 19px;
 
@@ -175,7 +243,7 @@ body {
 
   margin-top: 4px;
 
-  color: #73839d;
+  color: var(--nav-text);
 
   font-size: 7px;
 
@@ -185,7 +253,6 @@ body {
 
   text-transform: uppercase;
 }
-
 
 /* =====================================================
    NAVIGATION
@@ -215,7 +282,7 @@ body {
 
   border-radius: 9px;
 
-  color: #aebbd0;
+  color: var(--nav-text);
 
   font-size: 13px;
 
@@ -231,10 +298,10 @@ body {
 }
 
 .main-nav-link:hover {
-  color: #ffffff;
+  color: var(--nav-hover-text);
 
   background:
-    rgba(255, 255, 255, 0.055);
+    var(--nav-hover-bg);
 }
 
 .main-nav-link.active {
@@ -252,9 +319,8 @@ body {
     rgba(101, 71, 239, 0.22);
 }
 
-
 /* =====================================================
-   USER
+   USER AREA
    ===================================================== */
 
 .navbar-user {
@@ -266,6 +332,64 @@ body {
 
   gap: 9px;
 }
+
+/* =====================================================
+   THEME TOGGLE
+   ===================================================== */
+
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border:
+    1px solid
+    var(--theme-button-border);
+
+  border-radius: 50%;
+
+  background:
+    var(--theme-button-bg);
+
+  color:
+    var(--theme-button-text);
+
+  font-size: 16px;
+
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.06);
+
+  background:
+    var(--nav-hover-bg);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid #6547ee;
+
+  outline-offset: 2px;
+}
+
+/* =====================================================
+   AVATAR
+   ===================================================== */
 
 .navbar-avatar {
   width: 37px;
@@ -294,6 +418,10 @@ body {
   font-weight: 800;
 }
 
+/* =====================================================
+   USER INFORMATION
+   ===================================================== */
+
 .navbar-user-info {
   display: flex;
 
@@ -303,7 +431,7 @@ body {
 }
 
 .navbar-user-info strong {
-  color: #ffffff;
+  color: var(--app-text);
 
   font-size: 12px;
 
@@ -311,10 +439,14 @@ body {
 }
 
 .navbar-user-info span {
-  color: #74849d;
+  color: var(--nav-text);
 
   font-size: 9px;
 }
+
+/* =====================================================
+   LOGOUT
+   ===================================================== */
 
 .navbar-logout {
   height: 36px;
@@ -325,13 +457,14 @@ body {
     0 15px;
 
   border:
-    1px solid #33435d;
+    1px solid
+    var(--logout-border);
 
   border-radius: 8px;
 
   background: transparent;
 
-  color: #ffffff;
+  color: var(--logout-text);
 
   font-size: 11px;
 
@@ -341,15 +474,17 @@ body {
 
   transition:
     background 0.18s ease,
-    border-color 0.18s ease;
+    border-color 0.18s ease,
+    color 0.18s ease;
 }
 
 .navbar-logout:hover {
-  background: #17243a;
+  background:
+    var(--logout-hover-bg);
 
-  border-color: #52627b;
+  border-color:
+    var(--logout-border);
 }
-
 
 /* =====================================================
    PAGE CONTENT
@@ -362,10 +497,6 @@ body {
 
   flex: 1 0 auto;
 
-  /*
-    Available viewport height between
-    navbar and footer.
-  */
   min-height:
     calc(
       100vh
@@ -377,25 +508,24 @@ body {
 
   flex-direction: column;
 
-  background: #081321;
+  background: var(--app-bg);
+
+  color: var(--app-text);
 
   overflow: visible;
-}
 
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
 
 /* =====================================================
    PAGE ROOT
-   THIS IS THE IMPORTANT FIX
    ===================================================== */
 
 .app-content > * {
   width: 100%;
 
-  /*
-    Every page gets enough height to reach
-    the footer, but can grow naturally when
-    its content is larger.
-  */
   min-height:
     calc(
       100vh
@@ -414,7 +544,6 @@ body {
   overflow: visible !important;
 }
 
-
 /* =====================================================
    REMOVE OLD PAGE HEADERS
    ===================================================== */
@@ -422,7 +551,6 @@ body {
 .app-content > * > header {
   display: none !important;
 }
-
 
 /* =====================================================
    NO NESTED SCROLLBARS
@@ -433,7 +561,6 @@ body {
   overflow-x: visible !important;
   overflow-y: visible !important;
 }
-
 
 /* =====================================================
    GLOBAL FOOTER
@@ -459,13 +586,20 @@ body {
   padding:
     0 34px;
 
-  background: #0b1627;
+  background:
+    var(--footer-bg);
 
   border-top:
     1px solid
-    rgba(255, 255, 255, 0.07);
+    var(--navbar-border);
 
-  color: #718199;
+  color:
+    var(--footer-text);
+
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .site-footer-left {
@@ -479,7 +613,7 @@ body {
 }
 
 .site-footer-left strong {
-  color: #ffffff;
+  color: var(--app-text);
 
   font-size: 11px;
 
@@ -487,7 +621,7 @@ body {
 }
 
 .site-footer-left span {
-  color: #6f7f96;
+  color: var(--footer-text);
 
   font-size: 9px;
 }
@@ -497,7 +631,7 @@ body {
 }
 
 .site-footer-center span {
-  color: #7d8ca2;
+  color: var(--footer-text);
 
   font-size: 9px;
 
@@ -509,11 +643,10 @@ body {
 }
 
 .site-footer-right span {
-  color: #6f7f96;
+  color: var(--footer-text);
 
   font-size: 9px;
 }
-
 
 /* =====================================================
    LARGE DESKTOP
@@ -538,7 +671,6 @@ body {
       0 24px;
   }
 }
-
 
 /* =====================================================
    TABLET
@@ -612,7 +744,6 @@ body {
   }
 }
 
-
 /* =====================================================
    MOBILE
    ===================================================== */
@@ -664,6 +795,13 @@ body {
 
   .navbar-user-info {
     display: none;
+  }
+
+  .theme-toggle {
+    width: 34px;
+    height: 34px;
+
+    font-size: 15px;
   }
 
   .navbar-logout {
@@ -757,7 +895,6 @@ body {
   }
 }
 
-
 /* =====================================================
    SMALL MOBILE
    ===================================================== */
@@ -781,6 +918,13 @@ body {
 
   .main-brand-text strong {
     font-size: 16px;
+  }
+
+  .theme-toggle {
+    width: 32px;
+    height: 32px;
+
+    font-size: 14px;
   }
 
   .navbar-logout {

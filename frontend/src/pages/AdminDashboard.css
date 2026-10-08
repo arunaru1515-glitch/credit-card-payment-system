@@ -1246,3 +1246,666 @@
   }
 
 }
+
+/* =====================================================
+   ADMIN DASHBOARD - THEME SUPPORT
+   ===================================================== */
+
+
+/* =====================================================
+   LIGHT THEME - PAGE
+   ===================================================== */
+
+[data-theme="light"] .admin-page {
+  color: #172137;
+
+  background:
+    radial-gradient(
+      circle at 82% 8%,
+      rgba(91, 73, 210, 0.08),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 8% 88%,
+      rgba(24, 126, 150, 0.06),
+      transparent 24%
+    ),
+    linear-gradient(
+      135deg,
+      #f5f7fa 0%,
+      #eef2f7 50%,
+      #f5f7fa 100%
+    );
+}
+
+
+[data-theme="light"] .admin-page::before {
+  border-color: rgba(15, 23, 42, 0.05);
+
+  box-shadow:
+    0 0 0 38px rgba(15, 23, 42, 0.015),
+    0 0 0 76px rgba(15, 23, 42, 0.008);
+}
+
+
+[data-theme="light"] .admin-page::after {
+  border-color: rgba(15, 23, 42, 0.04);
+}
+
+
+/* =====================================================
+   LIGHT THEME - INTRO
+   ===================================================== */
+
+[data-theme="light"] .admin-overline {
+  color: #64748b;
+}
+
+
+[data-theme="light"] .admin-intro h1 {
+  color: #111827;
+}
+
+
+[data-theme="light"] .admin-intro p {
+  color: #64748b;
+}
+
+
+/* =====================================================
+   LIGHT THEME - ADMIN STATUS
+   ===================================================== */
+
+[data-theme="light"] .admin-status {
+  border-color: rgba(34, 160, 107, 0.22);
+  background: rgba(34, 160, 107, 0.07);
+}
+
+
+[data-theme="light"] .admin-status-dot {
+  background: #2db77d;
+}
+
+
+[data-theme="light"] .admin-status strong {
+  color: #16845a;
+}
+
+
+[data-theme="light"] .admin-status small {
+  color: #6b8f7e;
+}
+
+
+/* =====================================================
+   LIGHT THEME - FEATURE CARDS
+   ===================================================== */
+
+[data-theme="light"] .admin-feature-card {
+  border-color: #dbe2ea;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f7f9fc 100%
+    );
+
+  color: #172033;
+
+  box-shadow:
+    0 11px 25px rgba(15, 23, 42, 0.08);
+}
+
+
+[data-theme="light"] .admin-feature-card:hover {
+  border-color: #cbd5e1;
+
+  box-shadow:
+    0 15px 30px rgba(15, 23, 42, 0.12);
+}
+
+
+/* =====================================================
+   LIGHT THEME - FEATURE ICONS
+   ===================================================== */
+
+[data-theme="light"] .feature-icon {
+  background: #eef2f6;
+  color: #344054;
+}
+
+
+[data-theme="light"] .users-card .feature-icon {
+  background: #edf4ff;
+  color: #356fd2;
+}
+
+
+[data-theme="light"] .cards-card .feature-icon {
+  background: #f2effd;
+  color: #6658c3;
+}
+
+
+[data-theme="light"] .transactions-card .feature-icon {
+  background: #eaf7f8;
+  color: #2e858d;
+}
+
+
+[data-theme="light"] .summary-card .feature-icon {
+  background: #f0f2f5;
+  color: #475467;
+}
+
+
+[data-theme="light"] .feature-code {
+  color: #a0a9b7;
+}
+
+
+/* =====================================================
+   LIGHT THEME - FEATURE CONTENT
+   ===================================================== */
+
+[data-theme="light"] .feature-card-content h2 {
+  color: #172033;
+}
+
+
+[data-theme="light"] .feature-card-content p {
+  color: #718096;
+}
+
+
+/* =====================================================
+   LIGHT THEME - FEATURE LINK
+   ===================================================== */
+
+[data-theme="light"] .feature-link {
+  color: #2f3c51;
+}
+
+
+[data-theme="light"] .feature-link span {
+  color: #8d9aad;
+}
+
+
+[data-theme="light"] .feature-link:hover span {
+  color: #5a51b5;
+}
+
+
+/* =====================================================
+   LIGHT THEME - DJANGO PANEL
+   ===================================================== */
+
+[data-theme="light"] .django-panel {
+  border-color: #d9e1ea;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #f1f5f9 100%
+    );
+
+  color: #172033;
+
+  box-shadow:
+    0 15px 30px rgba(15, 23, 42, 0.10);
+}
+
+
+[data-theme="light"] .django-panel::after {
+  border-color: rgba(15, 23, 42, 0.05);
+
+  box-shadow:
+    0 0 0 30px rgba(15, 23, 42, 0.015),
+    0 0 0 60px rgba(15, 23, 42, 0.008);
+}
+
+
+[data-theme="light"] .django-overline {
+  color: #7f8da0;
+}
+
+
+[data-theme="light"] .django-panel h2 {
+  color: #172033;
+}
+
+
+[data-theme="light"] .django-panel p {
+  color: #64748b;
+}
+
+
+[data-theme="light"] .django-open-button {
+  background: #111b30;
+  color: #ffffff;
+}
+
+
+[data-theme="light"] .django-open-button:hover {
+  background: #1c2941;
+}
+
+
+[data-theme="light"] .django-panel-mark {
+  color: rgba(15, 23, 42, 0.06);
+}
+
+
+/* =====================================================
+   LIGHT THEME - NAVIGATION
+   ===================================================== */
+
+[data-theme="light"] .admin-navigation-card {
+  border-color: #dbe2ea;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f7f9fc 100%
+    );
+
+  color: #172033;
+
+  box-shadow:
+    0 9px 22px rgba(15, 23, 42, 0.07);
+}
+
+
+[data-theme="light"] .admin-navigation-card:hover {
+  border-color: #c8d2de;
+
+  box-shadow:
+    0 13px 26px rgba(15, 23, 42, 0.11);
+}
+
+
+[data-theme="light"] .navigation-icon {
+  background: #eef2f6;
+  color: #344054;
+}
+
+
+[data-theme="light"] .admin-navigation-card:nth-child(1) .navigation-icon {
+  background: #edf4ff;
+  color: #356fd2;
+}
+
+
+[data-theme="light"] .admin-navigation-card:nth-child(2) .navigation-icon {
+  background: #eaf7f8;
+  color: #2e858d;
+}
+
+
+[data-theme="light"] .admin-navigation-card:nth-child(3) .navigation-icon {
+  background: #f2effd;
+  color: #6658c3;
+}
+
+
+[data-theme="light"] .admin-navigation-card span {
+  color: #8995a5;
+}
+
+
+[data-theme="light"] .admin-navigation-card h3 {
+  color: #172033;
+}
+
+
+[data-theme="light"] .admin-navigation-card p {
+  color: #7a8797;
+}
+
+
+[data-theme="light"] .admin-navigation-card > strong {
+  color: #97a4b4;
+}
+
+
+[data-theme="light"] .admin-navigation-card:hover > strong {
+  color: #5d4bd1;
+}
+
+
+/* =====================================================
+   DARK THEME - PAGE
+   ===================================================== */
+
+[data-theme="dark"] .admin-page {
+  color: #ffffff;
+
+  background:
+    radial-gradient(
+      circle at 82% 8%,
+      rgba(91, 73, 210, 0.20),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 8% 88%,
+      rgba(24, 126, 150, 0.13),
+      transparent 24%
+    ),
+    linear-gradient(
+      135deg,
+      #081321 0%,
+      #0c192b 50%,
+      #081321 100%
+    );
+}
+
+
+/* =====================================================
+   DARK THEME - INTRO
+   ===================================================== */
+
+[data-theme="dark"] .admin-overline {
+  color: #8da0ba;
+}
+
+
+[data-theme="dark"] .admin-intro h1 {
+  color: #ffffff;
+}
+
+
+[data-theme="dark"] .admin-intro p {
+  color: #8ea0b7;
+}
+
+
+/* =====================================================
+   DARK THEME - ADMIN STATUS
+   ===================================================== */
+
+[data-theme="dark"] .admin-status {
+  border-color: rgba(74, 190, 141, 0.22);
+  background: rgba(17, 70, 52, 0.24);
+}
+
+
+[data-theme="dark"] .admin-status strong {
+  color: #74d7ac;
+}
+
+
+[data-theme="dark"] .admin-status small {
+  color: #769486;
+}
+
+
+/* =====================================================
+   DARK THEME - FEATURE CARDS
+   ===================================================== */
+
+[data-theme="dark"] .admin-feature-card {
+  border-color: #33435d;
+
+  background:
+    linear-gradient(
+      180deg,
+      #182438 0%,
+      #111d30 100%
+    );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 11px 25px rgba(0, 0, 0, 0.30);
+}
+
+
+[data-theme="dark"] .admin-feature-card:hover {
+  border-color: #4a5c78;
+
+  box-shadow:
+    0 15px 30px rgba(0, 0, 0, 0.38);
+}
+
+
+/* =====================================================
+   DARK THEME - FEATURE ICONS
+   ===================================================== */
+
+[data-theme="dark"] .feature-icon {
+  background: rgba(255, 255, 255, 0.08);
+  color: #d5deeb;
+}
+
+
+[data-theme="dark"] .users-card .feature-icon {
+  background: rgba(91, 141, 232, 0.15);
+  color: #8bb4ff;
+}
+
+
+[data-theme="dark"] .cards-card .feature-icon {
+  background: rgba(117, 100, 216, 0.16);
+  color: #a99aff;
+}
+
+
+[data-theme="dark"] .transactions-card .feature-icon {
+  background: rgba(62, 156, 166, 0.15);
+  color: #78d0d8;
+}
+
+
+[data-theme="dark"] .summary-card .feature-icon {
+  background: rgba(148, 163, 184, 0.12);
+  color: #c2ccda;
+}
+
+
+[data-theme="dark"] .feature-code {
+  color: #8191a8;
+}
+
+
+/* =====================================================
+   DARK THEME - FEATURE CONTENT
+   ===================================================== */
+
+[data-theme="dark"] .feature-card-content h2 {
+  color: #ffffff;
+}
+
+
+[data-theme="dark"] .feature-card-content p {
+  color: #aebbd0;
+}
+
+
+/* =====================================================
+   DARK THEME - FEATURE LINK
+   ===================================================== */
+
+[data-theme="dark"] .feature-link {
+  color: #d5deeb;
+}
+
+
+[data-theme="dark"] .feature-link span {
+  color: #8d9db3;
+}
+
+
+[data-theme="dark"] .feature-link:hover span {
+  color: #9b88ff;
+}
+
+
+/* =====================================================
+   DARK THEME - DJANGO PANEL
+   ===================================================== */
+
+[data-theme="dark"] .django-panel {
+  border-color: #202c42;
+
+  background:
+    linear-gradient(
+      135deg,
+      #10192d 0%,
+      #121e34 100%
+    );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 15px 30px rgba(0, 0, 0, 0.30);
+}
+
+
+[data-theme="dark"] .django-overline {
+  color: #8fa0b8;
+}
+
+
+[data-theme="dark"] .django-panel h2 {
+  color: #ffffff;
+}
+
+
+[data-theme="dark"] .django-panel p {
+  color: #bcc7d6;
+}
+
+
+[data-theme="dark"] .django-open-button {
+  background: #ffffff;
+  color: #172033;
+}
+
+
+[data-theme="dark"] .django-open-button:hover {
+  background: #eef2f6;
+}
+
+
+[data-theme="dark"] .django-panel-mark {
+  color: rgba(255, 255, 255, 0.055);
+}
+
+
+/* =====================================================
+   DARK THEME - NAVIGATION
+   ===================================================== */
+
+[data-theme="dark"] .admin-navigation-card {
+  border-color: #33435d;
+
+  background:
+    linear-gradient(
+      180deg,
+      #182438 0%,
+      #111d30 100%
+    );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 9px 22px rgba(0, 0, 0, 0.28);
+}
+
+
+[data-theme="dark"] .admin-navigation-card:hover {
+  border-color: #4a5c78;
+
+  box-shadow:
+    0 13px 26px rgba(0, 0, 0, 0.35);
+}
+
+
+[data-theme="dark"] .navigation-icon {
+  background: rgba(255, 255, 255, 0.08);
+  color: #d5deeb;
+}
+
+
+[data-theme="dark"] .admin-navigation-card:nth-child(1) .navigation-icon {
+  background: rgba(91, 141, 232, 0.15);
+  color: #8bb4ff;
+}
+
+
+[data-theme="dark"] .admin-navigation-card:nth-child(2) .navigation-icon {
+  background: rgba(62, 156, 166, 0.15);
+  color: #78d0d8;
+}
+
+
+[data-theme="dark"] .admin-navigation-card:nth-child(3) .navigation-icon {
+  background: rgba(117, 100, 216, 0.16);
+  color: #a99aff;
+}
+
+
+[data-theme="dark"] .admin-navigation-card span {
+  color: #8d9db3;
+}
+
+
+[data-theme="dark"] .admin-navigation-card h3 {
+  color: #ffffff;
+}
+
+
+[data-theme="dark"] .admin-navigation-card p {
+  color: #aebbd0;
+}
+
+
+[data-theme="dark"] .admin-navigation-card > strong {
+  color: #8191a8;
+}
+
+
+[data-theme="dark"] .admin-navigation-card:hover > strong {
+  color: #9b88ff;
+}
+
+
+/* =====================================================
+   ACCESSIBILITY
+   ===================================================== */
+
+[data-theme="light"] .feature-link:focus-visible,
+[data-theme="light"] .django-open-button:focus-visible,
+[data-theme="light"] .admin-navigation-card:focus-visible {
+  outline: 2px solid #6547ee;
+  outline-offset: 3px;
+}
+
+
+[data-theme="dark"] .feature-link:focus-visible,
+[data-theme="dark"] .django-open-button:focus-visible,
+[data-theme="dark"] .admin-navigation-card:focus-visible {
+  outline: 2px solid #9079ff;
+  outline-offset: 3px;
+}
+
+
+/* =====================================================
+   REDUCED MOTION
+   ===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .admin-page *,
+  .admin-page *::before,
+  .admin-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+}

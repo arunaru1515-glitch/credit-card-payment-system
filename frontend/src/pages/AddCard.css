@@ -1470,3 +1470,516 @@
   }
 
 }
+
+/* =====================================================
+   ADD CARD - THEME SUPPORT
+   ===================================================== */
+
+
+/* =====================================================
+   LIGHT THEME
+   ===================================================== */
+
+[data-theme="light"] .add-card-page {
+  color: #172137;
+
+  background:
+    radial-gradient(
+      circle at 82% 8%,
+      rgba(91, 73, 210, 0.08),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 8% 88%,
+      rgba(24, 126, 150, 0.06),
+      transparent 24%
+    ),
+    linear-gradient(
+      135deg,
+      #f5f7fa 0%,
+      #eef2f7 50%,
+      #f5f7fa 100%
+    );
+}
+
+
+[data-theme="light"] .add-card-page::before {
+  border-color: rgba(15, 23, 42, 0.05);
+
+  box-shadow:
+    0 0 0 38px rgba(15, 23, 42, 0.015),
+    0 0 0 76px rgba(15, 23, 42, 0.008);
+}
+
+
+[data-theme="light"] .add-card-page::after {
+  border-color: rgba(15, 23, 42, 0.04);
+}
+
+
+/* =====================================================
+   LIGHT - INTRO
+   ===================================================== */
+
+[data-theme="light"] .add-card-overline {
+  color: #64748b;
+}
+
+
+[data-theme="light"] .add-card-intro h1 {
+  color: #111827;
+}
+
+
+[data-theme="light"] .add-card-intro p {
+  color: #64748b;
+}
+
+
+/* =====================================================
+   LIGHT - MESSAGES
+   ===================================================== */
+
+[data-theme="light"] .success-message {
+  border-color: #bfe6d1;
+  background: #f1fbf5;
+  color: #187447;
+}
+
+
+[data-theme="light"] .error-message {
+  border-color: #edcccc;
+  background: #fff5f5;
+  color: #a52a25;
+}
+
+
+/* =====================================================
+   LIGHT - CARD DETAILS PANEL
+   ===================================================== */
+
+[data-theme="light"] .card-details-panel {
+  border-color: #d9e1ea;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f7f9fc 100%
+    );
+
+  color: #172033;
+
+  box-shadow:
+    0 13px 30px rgba(15, 23, 42, 0.08);
+}
+
+
+[data-theme="light"] .panel-overline {
+  color: #7f8da0;
+}
+
+
+[data-theme="light"] .card-details-heading h2 {
+  color: #172137;
+}
+
+
+[data-theme="light"] .card-details-heading p {
+  color: #78879b;
+}
+
+
+/* =====================================================
+   LIGHT - SECURITY BADGE
+   ===================================================== */
+
+[data-theme="light"] .security-badge {
+  border-color: #cfe8d9;
+  background: #f2fbf5;
+  color: #25764c;
+}
+
+
+/* =====================================================
+   LIGHT - FORM
+   ===================================================== */
+
+[data-theme="light"] .form-field label {
+  color: #344054;
+}
+
+
+[data-theme="light"] .form-field select,
+[data-theme="light"] .form-field input {
+  border-color: #ccd6e1;
+  background: #fbfcfd;
+  color: #172033;
+}
+
+
+[data-theme="light"] .form-field select:hover,
+[data-theme="light"] .form-field input:hover {
+  border-color: #aebdcc;
+}
+
+
+[data-theme="light"] .form-field select:focus,
+[data-theme="light"] .form-field input:focus {
+  border-color: #6755c8;
+  background: #ffffff;
+
+  box-shadow:
+    0 0 0 3px rgba(103, 85, 200, 0.08);
+}
+
+
+[data-theme="light"] .input-card-icon {
+  color: #8290a0;
+}
+
+
+[data-theme="light"] .field-helper {
+  color: #8190a0;
+}
+
+
+/* =====================================================
+   LIGHT - ADD CARD BUTTON
+   ===================================================== */
+
+[data-theme="light"] .add-card-button {
+  background: #111b30;
+  color: #ffffff;
+
+  box-shadow:
+    0 7px 15px rgba(17, 27, 48, 0.18);
+}
+
+
+[data-theme="light"] .add-card-button:hover {
+  background: #1b2942;
+}
+
+
+/* =====================================================
+   LIGHT - SAVED CARDS HEADING
+   ===================================================== */
+
+[data-theme="light"] .section-overline {
+  color: #64748b;
+}
+
+
+[data-theme="light"] .saved-cards-heading h2 {
+  color: #111827;
+}
+
+
+[data-theme="light"] .saved-cards-heading p {
+  color: #64748b;
+}
+
+
+[data-theme="light"] .saved-count {
+  border-color: #dce3eb;
+  background: #ffffff;
+  color: #64748b;
+}
+
+
+/* =====================================================
+   LIGHT - SAVED CARD
+   Keep card design unchanged
+   ===================================================== */
+
+[data-theme="light"] .saved-bank-card {
+  color: #ffffff;
+}
+
+
+/* =====================================================
+   LIGHT - SAVED CARD STATE
+   ===================================================== */
+
+[data-theme="light"] .saved-cards-state {
+  border-color: #dce3eb;
+  background: #ffffff;
+  color: #172137;
+
+  box-shadow:
+    0 10px 24px rgba(15, 23, 42, 0.07);
+}
+
+
+[data-theme="light"] .saved-cards-state p {
+  color: #7c899b;
+}
+
+
+[data-theme="light"] .saved-cards-state h3 {
+  color: #263149;
+}
+
+
+[data-theme="light"] .empty-card-icon {
+  background: #eef1f5;
+  color: #65738a;
+}
+
+
+[data-theme="light"] .state-spinner {
+  border-color: #dbe2ea;
+  border-top-color: #7757eb;
+}
+
+
+/* =====================================================
+   DARK THEME
+   ===================================================== */
+
+[data-theme="dark"] .add-card-page {
+  color: #ffffff;
+
+  background:
+    radial-gradient(
+      circle at 82% 8%,
+      rgba(91, 73, 210, 0.20),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 8% 88%,
+      rgba(24, 126, 150, 0.13),
+      transparent 24%
+    ),
+    linear-gradient(
+      135deg,
+      #081321 0%,
+      #0c192b 50%,
+      #081321 100%
+    );
+}
+
+
+/* =====================================================
+   DARK - INTRO
+   ===================================================== */
+
+[data-theme="dark"] .add-card-overline {
+  color: #8da0ba;
+}
+
+
+[data-theme="dark"] .add-card-intro h1 {
+  color: #ffffff;
+}
+
+
+[data-theme="dark"] .add-card-intro p {
+  color: #8ea0b7;
+}
+
+
+/* =====================================================
+   DARK - CARD DETAILS PANEL
+   ===================================================== */
+
+[data-theme="dark"] .card-details-panel {
+  border-color: #33435d;
+
+  background:
+    linear-gradient(
+      180deg,
+      #182438 0%,
+      #111d30 100%
+    );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 13px 30px rgba(0, 0, 0, 0.30);
+}
+
+
+[data-theme="dark"] .panel-overline {
+  color: #8da0ba;
+}
+
+
+[data-theme="dark"] .card-details-heading h2 {
+  color: #ffffff;
+}
+
+
+[data-theme="dark"] .card-details-heading p {
+  color: #aebbd0;
+}
+
+
+/* =====================================================
+   DARK - SECURITY BADGE
+   ===================================================== */
+
+[data-theme="dark"] .security-badge {
+  border-color: rgba(80, 200, 140, 0.28);
+  background: rgba(34, 160, 107, 0.10);
+  color: #8ee0b5;
+}
+
+
+[data-theme="dark"] .security-badge span {
+  color: #54d99a;
+}
+
+
+/* =====================================================
+   DARK - FORM
+   ===================================================== */
+
+[data-theme="dark"] .form-field label {
+  color: #d5deeb;
+}
+
+
+[data-theme="dark"] .form-field select,
+[data-theme="dark"] .form-field input {
+  border-color: #3a4a63;
+  background: #0f1b2d;
+  color: #ffffff;
+}
+
+
+[data-theme="dark"] .form-field select:hover,
+[data-theme="dark"] .form-field input:hover {
+  border-color: #566983;
+}
+
+
+[data-theme="dark"] .form-field select:focus,
+[data-theme="dark"] .form-field input:focus {
+  border-color: #7967e8;
+  background: #111f33;
+
+  box-shadow:
+    0 0 0 3px rgba(121, 103, 232, 0.14);
+}
+
+
+[data-theme="dark"] .input-card-icon {
+  color: #8da0ba;
+}
+
+
+[data-theme="dark"] .field-helper {
+  color: #8191a8;
+}
+
+
+/* =====================================================
+   DARK - ADD CARD BUTTON
+   ===================================================== */
+
+[data-theme="dark"] .add-card-button {
+  background: #ffffff;
+  color: #111b30;
+
+  box-shadow:
+    0 8px 18px rgba(0, 0, 0, 0.25);
+}
+
+
+[data-theme="dark"] .add-card-button:hover {
+  background: #e8edf5;
+}
+
+
+/* =====================================================
+   DARK - SAVED CARDS HEADING
+   ===================================================== */
+
+[data-theme="dark"] .section-overline {
+  color: #8da0ba;
+}
+
+
+[data-theme="dark"] .saved-cards-heading h2 {
+  color: #ffffff;
+}
+
+
+[data-theme="dark"] .saved-cards-heading p {
+  color: #8ea0b7;
+}
+
+
+[data-theme="dark"] .saved-count {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.07);
+  color: #b4bfd0;
+}
+
+
+/* =====================================================
+   DARK - SAVED CARDS STATE
+   ===================================================== */
+
+[data-theme="dark"] .saved-cards-state {
+  border-color: rgba(255, 255, 255, 0.10);
+  background: rgba(18, 31, 49, 0.92);
+  color: #ffffff;
+}
+
+
+[data-theme="dark"] .saved-cards-state p {
+  color: #8d9db3;
+}
+
+
+[data-theme="dark"] .saved-cards-state h3 {
+  color: #ffffff;
+}
+
+
+[data-theme="dark"] .empty-card-icon {
+  background: rgba(255, 255, 255, 0.08);
+  color: #9cabbe;
+}
+
+
+/* =====================================================
+   ACCESSIBILITY
+   ===================================================== */
+
+[data-theme="light"] .add-card-button:focus-visible,
+[data-theme="light"] .delete-card-button:focus-visible,
+[data-theme="light"] .form-field input:focus-visible,
+[data-theme="light"] .form-field select:focus-visible {
+  outline: 2px solid #6547ee;
+  outline-offset: 3px;
+}
+
+
+[data-theme="dark"] .add-card-button:focus-visible,
+[data-theme="dark"] .delete-card-button:focus-visible,
+[data-theme="dark"] .form-field input:focus-visible,
+[data-theme="dark"] .form-field select:focus-visible {
+  outline: 2px solid #9079ff;
+  outline-offset: 3px;
+}
+
+
+/* =====================================================
+   REDUCED MOTION
+   ===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .add-card-page *,
+  .add-card-page *::before,
+  .add-card-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+}

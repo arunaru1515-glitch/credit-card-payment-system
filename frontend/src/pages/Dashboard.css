@@ -1623,3 +1623,445 @@
   }
 
 }
+
+/* =====================================================
+   DASHBOARD THEME SUPPORT
+   ===================================================== */
+
+/* -----------------------------------------------------
+   LIGHT THEME
+   ----------------------------------------------------- */
+
+[data-theme="light"] .dashboard-page {
+  color: #172137;
+
+  background:
+    radial-gradient(
+      circle at 82% 8%,
+      rgba(91, 73, 210, 0.08),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 8% 88%,
+      rgba(24, 126, 150, 0.06),
+      transparent 24%
+    ),
+    linear-gradient(
+      135deg,
+      #f5f7fa 0%,
+      #eef2f7 50%,
+      #f5f7fa 100%
+    );
+}
+
+[data-theme="light"] .dashboard-page::before {
+  border-color: rgba(15, 23, 42, 0.05);
+
+  box-shadow:
+    0 0 0 38px rgba(15, 23, 42, 0.015),
+    0 0 0 76px rgba(15, 23, 42, 0.008);
+}
+
+[data-theme="light"] .dashboard-page::after {
+  border-color: rgba(15, 23, 42, 0.04);
+}
+
+/* -----------------------------------------------------
+   HERO
+   ----------------------------------------------------- */
+
+[data-theme="light"] .dashboard-overline {
+  color: #64748b;
+}
+
+[data-theme="light"] .dashboard-hero h1 {
+  color: #111827;
+}
+
+[data-theme="light"] .dashboard-hero p {
+  color: #64748b;
+}
+
+/* -----------------------------------------------------
+   ACCOUNT STATUS
+   ----------------------------------------------------- */
+
+[data-theme="light"] .account-status {
+  border-color: rgba(34, 160, 107, 0.22);
+  background: rgba(34, 160, 107, 0.07);
+}
+
+[data-theme="light"] .account-status strong {
+  color: #16845a;
+}
+
+[data-theme="light"] .account-status span:last-child {
+  color: #6b8f7e;
+}
+
+/* -----------------------------------------------------
+   ERROR
+   ----------------------------------------------------- */
+
+[data-theme="light"] .dashboard-error {
+  border-color: #f0caca;
+  background: #fff5f5;
+  color: #b42323;
+}
+
+/* -----------------------------------------------------
+   STAT CARDS
+   ----------------------------------------------------- */
+
+[data-theme="light"] .stat-card {
+  border-color: #e1e7ef;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #f8fafc
+    );
+
+  box-shadow:
+    0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .stat-card:hover {
+  border-color: #d2d9e3;
+
+  box-shadow:
+    0 13px 28px rgba(15, 23, 42, 0.12);
+}
+
+[data-theme="light"] .stat-content span {
+  color: #64748b;
+}
+
+[data-theme="light"] .stat-content strong {
+  color: #111827;
+}
+
+/* -----------------------------------------------------
+   SECTION HEADINGS
+   ----------------------------------------------------- */
+
+[data-theme="light"] .section-heading span {
+  color: #64748b;
+}
+
+[data-theme="light"] .section-heading h2 {
+  color: #111827;
+}
+
+/* -----------------------------------------------------
+   QUICK ACTION CARDS
+   ----------------------------------------------------- */
+
+[data-theme="light"] .quick-card {
+  border-color: #e1e7ef;
+
+  color: #172137;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #f8fafc
+    );
+
+  box-shadow:
+    0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .quick-card:hover {
+  border-color: #d2d9e3;
+
+  box-shadow:
+    0 14px 30px rgba(15, 23, 42, 0.12);
+}
+
+[data-theme="light"] .quick-card::after {
+  background: rgba(15, 23, 42, 0.025);
+}
+
+[data-theme="light"] .quick-content h3 {
+  color: #172137;
+}
+
+[data-theme="light"] .quick-content p {
+  color: #64748b;
+}
+
+[data-theme="light"] .quick-arrow {
+  color: #64748b;
+}
+
+[data-theme="light"] .quick-card:hover .quick-arrow {
+  color: #4f46e5;
+}
+
+/* -----------------------------------------------------
+   DASHBOARD PANELS
+   ----------------------------------------------------- */
+
+[data-theme="light"] .dashboard-panel {
+  border-color: #dce3eb;
+
+  background: #ffffff;
+
+  color: #172137;
+
+  box-shadow:
+    0 10px 25px rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .panel-heading span {
+  color: #7a889c;
+}
+
+[data-theme="light"] .panel-heading h2 {
+  color: #172137;
+}
+
+/* -----------------------------------------------------
+   TRANSACTIONS
+   ----------------------------------------------------- */
+
+[data-theme="light"] .transaction-row {
+  border-bottom-color: #edf0f4;
+}
+
+[data-theme="light"] .transaction-left strong {
+  color: #253047;
+}
+
+[data-theme="light"] .transaction-left span {
+  color: #8794a6;
+}
+
+[data-theme="light"] .transaction-right strong {
+  color: #1c2639;
+}
+
+[data-theme="light"] .transaction-right span {
+  color: #8a96a8;
+}
+
+/* -----------------------------------------------------
+   FAILED NOTICE
+   ----------------------------------------------------- */
+
+[data-theme="light"] .failed-notice {
+  border-color: #f0d2d2;
+  background: #fff5f5;
+}
+
+[data-theme="light"] .failed-notice-icon {
+  background: #fdeaea;
+  color: #c84e4e;
+}
+
+[data-theme="light"] .failed-notice strong {
+  color: #a23c3c;
+}
+
+[data-theme="light"] .failed-notice span {
+  color: #ba7373;
+}
+
+/* -----------------------------------------------------
+   EMPTY STATE
+   ----------------------------------------------------- */
+
+[data-theme="light"] .empty-state-icon {
+  background: #eef1f5;
+  color: #65738a;
+}
+
+[data-theme="light"] .empty-state h3 {
+  color: #263149;
+}
+
+[data-theme="light"] .empty-state p {
+  color: #7c899b;
+}
+
+/* -----------------------------------------------------
+   DASHBOARD SUMMARY
+   ----------------------------------------------------- */
+
+[data-theme="light"] .dashboard-summary {
+  border-color: #e1e7ef;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 8px 20px rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .summary-item {
+  color: #64748b;
+}
+
+[data-theme="light"] .summary-item strong {
+  color: #172137;
+}
+
+[data-theme="light"] .summary-divider {
+  background: #e2e8f0;
+}
+
+/* -----------------------------------------------------
+   LOADING
+   ----------------------------------------------------- */
+
+[data-theme="light"] .dashboard-loading {
+  background: #f5f7fa;
+  color: #64748b;
+}
+
+[data-theme="light"] .dashboard-loading-spinner {
+  border-color: #dbe2ea;
+  border-top-color: #7356e4;
+}
+
+/* -----------------------------------------------------
+   SKELETON
+   ----------------------------------------------------- */
+
+[data-theme="light"] .skeleton {
+  background: #e5eaf0;
+}
+
+[data-theme="light"] .skeleton::after {
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.65),
+      transparent
+    );
+}
+
+[data-theme="light"] .dashboard-loading p {
+  color: #64748b;
+}
+
+
+/* =====================================================
+   DARK THEME
+   ===================================================== */
+
+/*
+   The original Dashboard design is already dark,
+   so we keep the existing Dashboard colors when
+   data-theme="dark".
+*/
+
+[data-theme="dark"] .dashboard-page {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .dashboard-panel {
+  background: #ffffff;
+  color: #172137;
+}
+
+[data-theme="dark"] .transaction-left strong {
+  color: #253047;
+}
+
+[data-theme="dark"] .transaction-right strong {
+  color: #1c2639;
+}
+
+
+/* =====================================================
+   ACCESSIBILITY
+   ===================================================== */
+
+[data-theme="light"] .quick-card:focus-visible,
+[data-theme="light"] .panel-heading a:focus-visible,
+[data-theme="light"] .empty-state a:focus-visible {
+  outline: 2px solid #6547ee;
+  outline-offset: 3px;
+}
+
+[data-theme="dark"] .quick-card:focus-visible,
+[data-theme="dark"] .panel-heading a:focus-visible,
+[data-theme="dark"] .empty-state a:focus-visible {
+  outline: 2px solid #9079ff;
+  outline-offset: 3px;
+}
+
+
+/* =====================================================
+   REDUCED MOTION
+   ===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .dashboard-page *,
+  .dashboard-page *::before,
+  .dashboard-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+}
+
+/* ============================================================
+   MONTHLY STATEMENT DOWNLOAD
+   ============================================================ */
+
+.statement-download-button {
+  margin-top: 18px;
+  padding: 12px 20px;
+  border: 1px solid #6d4aff;
+  border-radius: 10px;
+  background: #6d4aff;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(109, 74, 255, 0.18);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.2s ease,
+    box-shadow 0.3s ease;
+}
+
+.statement-download-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(109, 74, 255, 0.28);
+}
+
+.statement-download-button:active {
+  transform: translateY(0);
+}
+
+.statement-download-button:focus-visible {
+  outline: 3px solid rgba(109, 74, 255, 0.35);
+  outline-offset: 3px;
+}
+
+[data-theme="dark"] .statement-download-button {
+  background: #7c5cff;
+  border-color: #7c5cff;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .statement-download-button:hover {
+  background: #8b70ff;
+  border-color: #8b70ff;
+}
+
+@media (max-width: 600px) {
+  .statement-download-button {
+    width: 100%;
+    max-width: 280px;
+  }
+}

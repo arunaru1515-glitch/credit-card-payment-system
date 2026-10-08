@@ -1196,3 +1196,707 @@
   }
 
 }
+
+/* =====================================================
+   TRANSACTIONS - THEME SUPPORT
+   ===================================================== */
+
+
+/* =====================================================
+   LIGHT THEME - PAGE
+   ===================================================== */
+
+[data-theme="light"] .transactions-page {
+  color: #172137;
+
+  background:
+    radial-gradient(
+      circle at 82% 8%,
+      rgba(91, 73, 210, 0.08),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 8% 88%,
+      rgba(24, 126, 150, 0.06),
+      transparent 24%
+    ),
+    linear-gradient(
+      135deg,
+      #f5f7fa 0%,
+      #eef2f7 50%,
+      #f5f7fa 100%
+    );
+}
+
+
+[data-theme="light"] .transactions-page::before {
+  border-color: rgba(15, 23, 42, 0.05);
+
+  box-shadow:
+    0 0 0 38px rgba(15, 23, 42, 0.015),
+    0 0 0 76px rgba(15, 23, 42, 0.008);
+}
+
+
+[data-theme="light"] .transactions-page::after {
+  border-color: rgba(15, 23, 42, 0.04);
+}
+
+
+/* =====================================================
+   LIGHT THEME - HEADING
+   ===================================================== */
+
+[data-theme="light"] .heading-overline {
+  color: #64748b;
+}
+
+
+[data-theme="light"] .transactions-heading h1 {
+  color: #111827;
+}
+
+
+[data-theme="light"] .transactions-heading p {
+  color: #64748b;
+}
+
+
+/* =====================================================
+   LIGHT THEME - ERROR
+   ===================================================== */
+
+[data-theme="light"] .transactions-error {
+  border-color: #edcccc;
+  background: #fff5f5;
+  color: #a52a25;
+}
+
+
+/* =====================================================
+   LIGHT THEME - FILTER PANEL
+   ===================================================== */
+
+[data-theme="light"] .filter-panel {
+  border-color: #d9e1ea;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f7f9fc 100%
+    );
+
+  color: #172033;
+
+  box-shadow:
+    0 12px 26px rgba(15, 23, 42, 0.08);
+}
+
+
+[data-theme="light"] .filter-heading h2 {
+  color: #172033;
+}
+
+
+[data-theme="light"] .filter-heading p {
+  color: #718096;
+}
+
+
+/* =====================================================
+   LIGHT THEME - FILTER FIELDS
+   ===================================================== */
+
+[data-theme="light"] .filter-field label {
+  color: #344054;
+}
+
+
+[data-theme="light"] .filter-field select,
+[data-theme="light"] .filter-field input {
+  border-color: #ccd6e1;
+  background: #fbfcfd;
+  color: #172033;
+}
+
+
+[data-theme="light"] .filter-field select:hover,
+[data-theme="light"] .filter-field input:hover {
+  border-color: #aebdcc;
+}
+
+
+[data-theme="light"] .filter-field select:focus,
+[data-theme="light"] .filter-field input:focus {
+  border-color: #6755c8;
+  background: #ffffff;
+
+  box-shadow:
+    0 0 0 3px rgba(103, 85, 200, 0.08);
+}
+
+
+[data-theme="light"] .amount-input span {
+  color: #7b8797;
+}
+
+
+/* =====================================================
+   LIGHT THEME - FILTER BUTTONS
+   ===================================================== */
+
+[data-theme="light"] .apply-button {
+  border-color: #111b30;
+  background: #111b30;
+  color: #ffffff;
+}
+
+
+[data-theme="light"] .apply-button:hover {
+  background: #1c2941;
+}
+
+
+[data-theme="light"] .clear-button {
+  border-color: #ccd6e1;
+  background: #ffffff;
+  color: #344054;
+}
+
+
+[data-theme="light"] .clear-button:hover {
+  background: #f5f7fa;
+  border-color: #b7c2ce;
+}
+
+
+/* =====================================================
+   LIGHT THEME - TRANSACTION PANEL
+   ===================================================== */
+
+[data-theme="light"] .transaction-panel {
+  border-color: #d9e1ea;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f8fafc 100%
+    );
+
+  color: #172033;
+
+  box-shadow:
+    0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+
+[data-theme="light"] .transaction-panel-header {
+  border-bottom-color: #e7ebef;
+}
+
+
+[data-theme="light"] .section-overline {
+  color: #7f8da0;
+}
+
+
+[data-theme="light"] .transaction-panel-header h2 {
+  color: #172033;
+}
+
+
+[data-theme="light"] .transaction-panel-header p {
+  color: #718096;
+}
+
+
+/* =====================================================
+   LIGHT THEME - TABLE SCROLLBAR
+   ===================================================== */
+
+[data-theme="light"] .table-wrapper {
+  scrollbar-color:
+    #c2cad4
+    transparent;
+}
+
+
+[data-theme="light"] .table-wrapper::-webkit-scrollbar-track {
+  background: #f2f4f7;
+}
+
+
+[data-theme="light"] .table-wrapper::-webkit-scrollbar-thumb {
+  background: #c2cad4;
+}
+
+
+/* =====================================================
+   LIGHT THEME - TABLE
+   ===================================================== */
+
+[data-theme="light"] .transaction-table thead {
+  background: #f5f7fa;
+}
+
+
+[data-theme="light"] .transaction-table th {
+  border-bottom-color: #e4e9ee;
+  color: #69778a;
+}
+
+
+[data-theme="light"] .transaction-table td {
+  border-bottom-color: #edf0f3;
+  color: #596779;
+}
+
+
+[data-theme="light"] .transaction-table tbody tr:hover {
+  background: #fafbfc;
+}
+
+
+/* =====================================================
+   LIGHT THEME - TABLE TEXT
+   ===================================================== */
+
+[data-theme="light"] .id-cell {
+  color: #172033 !important;
+}
+
+
+[data-theme="light"] .card-cell {
+  color: #5d6b7b !important;
+}
+
+
+[data-theme="light"] .amount-cell {
+  color: #172033 !important;
+}
+
+
+[data-theme="light"] .date-cell {
+  color: #6b788a !important;
+}
+
+
+[data-theme="light"] .reason-cell {
+  color: #69778a !important;
+}
+
+
+/* =====================================================
+   LIGHT THEME - STATUS
+   ===================================================== */
+
+[data-theme="light"] .status-pill.success {
+  background: #dff6e8;
+  color: #16844d;
+}
+
+
+[data-theme="light"] .status-pill.failed {
+  background: #fee1e1;
+  color: #c03333;
+}
+
+
+[data-theme="light"] .status-pill.pending {
+  background: #fff1cf;
+  color: #a96a0c;
+}
+
+
+/* =====================================================
+   LIGHT THEME - LOADING
+   ===================================================== */
+
+[data-theme="light"] .loading-spinner {
+  border-color: #dce2e8;
+  border-top-color: #6047d8;
+}
+
+
+[data-theme="light"] .transactions-loading p {
+  color: #7d8998;
+}
+
+
+/* =====================================================
+   LIGHT THEME - EMPTY STATE
+   ===================================================== */
+
+[data-theme="light"] .empty-icon {
+  background: #eef2f6;
+  color: #68778a;
+}
+
+
+[data-theme="light"] .transactions-empty h3 {
+  color: #172033;
+}
+
+
+[data-theme="light"] .transactions-empty p {
+  color: #7d8998;
+}
+
+
+/* =====================================================
+   DARK THEME - PAGE
+   ===================================================== */
+
+[data-theme="dark"] .transactions-page {
+  color: #ffffff;
+
+  background:
+    radial-gradient(
+      circle at 82% 8%,
+      rgba(91, 73, 210, 0.20),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 8% 88%,
+      rgba(24, 126, 150, 0.13),
+      transparent 24%
+    ),
+    linear-gradient(
+      135deg,
+      #081321 0%,
+      #0c192b 50%,
+      #081321 100%
+    );
+}
+
+
+/* =====================================================
+   DARK THEME - HEADING
+   ===================================================== */
+
+[data-theme="dark"] .heading-overline {
+  color: #8da0ba;
+}
+
+
+[data-theme="dark"] .transactions-heading h1 {
+  color: #ffffff;
+}
+
+
+[data-theme="dark"] .transactions-heading p {
+  color: #8ea0b7;
+}
+
+
+/* =====================================================
+   DARK THEME - FILTER PANEL
+   ===================================================== */
+
+[data-theme="dark"] .filter-panel {
+  border-color: #33435d;
+
+  background:
+    linear-gradient(
+      180deg,
+      #182438 0%,
+      #111d30 100%
+    );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.30);
+}
+
+
+[data-theme="dark"] .filter-heading h2 {
+  color: #ffffff;
+}
+
+
+[data-theme="dark"] .filter-heading p {
+  color: #aebbd0;
+}
+
+
+/* =====================================================
+   DARK THEME - FILTER FIELDS
+   ===================================================== */
+
+[data-theme="dark"] .filter-field label {
+  color: #d5deeb;
+}
+
+
+[data-theme="dark"] .filter-field select,
+[data-theme="dark"] .filter-field input {
+  border-color: #3a4a63;
+  background: #0f1b2d;
+  color: #ffffff;
+}
+
+
+[data-theme="dark"] .filter-field select:hover,
+[data-theme="dark"] .filter-field input:hover {
+  border-color: #566983;
+}
+
+
+[data-theme="dark"] .filter-field select:focus,
+[data-theme="dark"] .filter-field input:focus {
+  border-color: #7967e8;
+  background: #111f33;
+
+  box-shadow:
+    0 0 0 3px rgba(121, 103, 232, 0.14);
+}
+
+
+[data-theme="dark"] .amount-input span {
+  color: #8da0ba;
+}
+
+
+/* =====================================================
+   DARK THEME - FILTER BUTTONS
+   ===================================================== */
+
+[data-theme="dark"] .apply-button {
+  border-color: #ffffff;
+  background: #ffffff;
+  color: #111b30;
+}
+
+
+[data-theme="dark"] .apply-button:hover {
+  background: #e7ecf4;
+}
+
+
+[data-theme="dark"] .clear-button {
+  border-color: #3a4a63;
+  background: #17243a;
+  color: #d5deeb;
+}
+
+
+[data-theme="dark"] .clear-button:hover {
+  background: #202f47;
+  border-color: #566983;
+}
+
+
+/* =====================================================
+   DARK THEME - TRANSACTION PANEL
+   ===================================================== */
+
+[data-theme="dark"] .transaction-panel {
+  border-color: #33435d;
+
+  background:
+    linear-gradient(
+      180deg,
+      #182438 0%,
+      #111d30 100%
+    );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.30);
+}
+
+
+[data-theme="dark"] .transaction-panel-header {
+  border-bottom-color: #33435d;
+}
+
+
+[data-theme="dark"] .section-overline {
+  color: #8da0ba;
+}
+
+
+[data-theme="dark"] .transaction-panel-header h2 {
+  color: #ffffff;
+}
+
+
+[data-theme="dark"] .transaction-panel-header p {
+  color: #aebbd0;
+}
+
+
+/* =====================================================
+   DARK THEME - TABLE SCROLLBAR
+   ===================================================== */
+
+[data-theme="dark"] .table-wrapper {
+  scrollbar-color:
+    #47566d
+    transparent;
+}
+
+
+[data-theme="dark"] .table-wrapper::-webkit-scrollbar-track {
+  background: #111d30;
+}
+
+
+[data-theme="dark"] .table-wrapper::-webkit-scrollbar-thumb {
+  background: #47566d;
+}
+
+
+/* =====================================================
+   DARK THEME - TABLE
+   ===================================================== */
+
+[data-theme="dark"] .transaction-table thead {
+  background: #111d30;
+}
+
+
+[data-theme="dark"] .transaction-table th {
+  border-bottom-color: #33435d;
+  color: #9eacc0;
+}
+
+
+[data-theme="dark"] .transaction-table td {
+  border-bottom-color: #29384f;
+  color: #c2ccda;
+}
+
+
+[data-theme="dark"] .transaction-table tbody tr:hover {
+  background: #1d2a3d;
+}
+
+
+/* =====================================================
+   DARK THEME - TABLE TEXT
+   ===================================================== */
+
+[data-theme="dark"] .id-cell {
+  color: #ffffff !important;
+}
+
+
+[data-theme="dark"] .card-cell {
+  color: #c2ccda !important;
+}
+
+
+[data-theme="dark"] .amount-cell {
+  color: #ffffff !important;
+}
+
+
+[data-theme="dark"] .date-cell {
+  color: #aebbd0 !important;
+}
+
+
+[data-theme="dark"] .reason-cell {
+  color: #aebbd0 !important;
+}
+
+
+/* =====================================================
+   DARK THEME - STATUS
+   ===================================================== */
+
+[data-theme="dark"] .status-pill.success {
+  background: rgba(34, 160, 107, 0.18);
+  color: #7ee2a8;
+}
+
+
+[data-theme="dark"] .status-pill.failed {
+  background: rgba(220, 60, 60, 0.18);
+  color: #ff9b9b;
+}
+
+
+[data-theme="dark"] .status-pill.pending {
+  background: rgba(217, 160, 40, 0.18);
+  color: #ffd27a;
+}
+
+
+/* =====================================================
+   DARK THEME - LOADING
+   ===================================================== */
+
+[data-theme="dark"] .loading-spinner {
+  border-color: #33435d;
+  border-top-color: #9079ff;
+}
+
+
+[data-theme="dark"] .transactions-loading p {
+  color: #8d9db3;
+}
+
+
+/* =====================================================
+   DARK THEME - EMPTY STATE
+   ===================================================== */
+
+[data-theme="dark"] .empty-icon {
+  background: rgba(255, 255, 255, 0.08);
+  color: #9cabbe;
+}
+
+
+[data-theme="dark"] .transactions-empty h3 {
+  color: #ffffff;
+}
+
+
+[data-theme="dark"] .transactions-empty p {
+  color: #8d9db3;
+}
+
+
+/* =====================================================
+   ACCESSIBILITY
+   ===================================================== */
+
+[data-theme="light"] .apply-button:focus-visible,
+[data-theme="light"] .clear-button:focus-visible,
+[data-theme="light"] .filter-field input:focus-visible,
+[data-theme="light"] .filter-field select:focus-visible {
+  outline: 2px solid #6547ee;
+  outline-offset: 3px;
+}
+
+
+[data-theme="dark"] .apply-button:focus-visible,
+[data-theme="dark"] .clear-button:focus-visible,
+[data-theme="dark"] .filter-field input:focus-visible,
+[data-theme="dark"] .filter-field select:focus-visible {
+  outline: 2px solid #9079ff;
+  outline-offset: 3px;
+}
+
+
+/* =====================================================
+   REDUCED MOTION
+   ===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .transactions-page *,
+  .transactions-page *::before,
+  .transactions-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+}
