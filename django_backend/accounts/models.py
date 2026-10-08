@@ -34,11 +34,14 @@ class Card(models.Model):
         max_length=4
     )
 
-    # Standard credit limit assigned to each credit card
     credit_limit = models.DecimalField(
         max_digits=12,
         decimal_places=2,
         default=100000.00
+    )
+
+    is_blocked = models.BooleanField(
+        default=False
     )
 
     created_at = models.DateTimeField(
@@ -46,4 +49,10 @@ class Card(models.Model):
     )
 
     def __str__(self):
-        return f"{self.card_type} - **** {self.last_four_digits}"
+        status = "Blocked" if self.is_blocked else "Active"
+
+        return (
+            f"{self.card_type} - "
+            f"**** {self.last_four_digits} - "
+            f"{status}"
+        )

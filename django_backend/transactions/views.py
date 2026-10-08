@@ -9,7 +9,10 @@ from django.utils import timezone
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.styles import (
+    getSampleStyleSheet,
+    ParagraphStyle,
+)
 from reportlab.platypus import (
     SimpleDocTemplate,
     Paragraph,
@@ -24,15 +27,26 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from accounts.models import Card
+
 from .models import Transaction
 from .serializers import TransactionSerializer
+from .email_service import (
+    send_transaction_alert,
+    send_low_credit_alert,
+)
 
+
+# ============================================================
+# TRANSACTION HISTORY
+# ============================================================
 
 class TransactionHistoryView(generics.ListAPIView):
+
     serializer_class = TransactionSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
+
         queryset = Transaction.objects.filter(
             user=self.request.user
         ).order_by("-transaction_date")
@@ -84,8 +98,11 @@ def create_pending_transaction(request):
     # --------------------------------------------------------
 
     if not card_id:
+
         return Response(
-            {"error": "card_id is required"},
+            {
+                "error": "card_id is required"
+            },
             status=status.HTTP_400_BAD_REQUEST
         )
 
@@ -94,22 +111,33 @@ def create_pending_transaction(request):
     # --------------------------------------------------------
 
     if amount is None:
+
         return Response(
-            {"error": "amount is required"},
+            {
+                "error": "amount is required"
+            },
             status=status.HTTP_400_BAD_REQUEST
         )
 
     try:
+
         amount = Decimal(str(amount))
+
     except (InvalidOperation, TypeError, ValueError):
+
         return Response(
-            {"error": "Invalid amount"},
+            {
+                "error": "Invalid amount"
+            },
             status=status.HTTP_400_BAD_REQUEST
         )
 
     if amount <= 0:
+
         return Response(
-            {"error": "Amount must be greater than 0"},
+            {
+                "error": "Amount must be greater than 0"
+            },
             status=status.HTTP_400_BAD_REQUEST
         )
 
@@ -118,14 +146,34 @@ def create_pending_transaction(request):
     # --------------------------------------------------------
 
     try:
+
         card = Card.objects.get(
             id=card_id,
             user=request.user
         )
+
     except Card.DoesNotExist:
+
         return Response(
-            {"error": "Card not found"},
+            {
+                "error": "Card not found"
+            },
             status=status.HTTP_404_NOT_FOUND
+        )
+
+    # --------------------------------------------------------
+    # CHECK BLOCKED CARD
+    # --------------------------------------------------------
+
+    if card.is_blocked:
+
+        return Response(
+            {
+                "error": "This card is blocked",
+                "card_id": card.id,
+                "card_status": "BLOCKED",
+            },
+            status=status.HTTP_400_BAD_REQUEST
         )
 
     # --------------------------------------------------------
@@ -180,7 +228,9 @@ def create_pending_transaction(request):
     return Response(
         {
             "message": "Pending transaction created",
-            "transaction": TransactionSerializer(transaction).data
+            "transaction": TransactionSerializer(
+                transaction
+            ).data
         },
         status=status.HTTP_201_CREATED
     )
@@ -197,7 +247,12 @@ def update_transaction_status(request, transaction_id):
     new_status = request.data.get("status")
     failure_reason = request.data.get("failure_reason")
 
+    # --------------------------------------------------------
+    # VALIDATE STATUS
+    # --------------------------------------------------------
+
     if new_status not in ["SUCCESS", "FAILED"]:
+
         return Response(
             {
                 "error": "Status must be SUCCESS or FAILED"
@@ -205,7 +260,12 @@ def update_transaction_status(request, transaction_id):
             status=status.HTTP_400_BAD_REQUEST
         )
 
+    # --------------------------------------------------------
+    # VALIDATE FAILURE REASON
+    # --------------------------------------------------------
+
     if new_status == "FAILED" and not failure_reason:
+
         return Response(
             {
                 "error": (
@@ -216,22 +276,60 @@ def update_transaction_status(request, transaction_id):
             status=status.HTTP_400_BAD_REQUEST
         )
 
+    # --------------------------------------------------------
+    # GET TRANSACTION
+    # --------------------------------------------------------
+
     try:
+
         transaction = Transaction.objects.get(
             id=transaction_id,
             user=request.user
         )
+
     except Transaction.DoesNotExist:
+
         return Response(
-            {"error": "Transaction not found"},
+            {
+                "error": "Transaction not found"
+            },
             status=status.HTTP_404_NOT_FOUND
         )
+
+    # --------------------------------------------------------
+    # CHECK BLOCKED CARD
+    # --------------------------------------------------------
+
+    if (
+        new_status == "SUCCESS"
+        and transaction.card
+        and transaction.card.is_blocked
+    ):
+
+        return Response(
+            {
+                "error": (
+                    "Transaction cannot be completed "
+                    "because the card is blocked"
+                ),
+                "card_id": transaction.card.id,
+                "card_status": "BLOCKED",
+            },
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    # --------------------------------------------------------
+    # UPDATE TRANSACTION
+    # --------------------------------------------------------
 
     transaction.status = new_status
 
     if new_status == "FAILED":
+
         transaction.failure_reason = failure_reason
+
     else:
+
         transaction.failure_reason = None
 
     transaction.save(
@@ -241,10 +339,60 @@ def update_transaction_status(request, transaction_id):
         ]
     )
 
+    # --------------------------------------------------------
+    # HIGH-VALUE TRANSACTION EMAIL ALERT
+    # --------------------------------------------------------
+
+    if (
+        new_status == "SUCCESS"
+        and transaction.amount > Decimal("5000.00")
+    ):
+
+        send_transaction_alert(transaction)
+
+    # --------------------------------------------------------
+    # LOW AVAILABLE CREDIT EMAIL ALERT
+    # --------------------------------------------------------
+
+    if (
+        new_status == "SUCCESS"
+        and transaction.card
+        and transaction.card.card_type == "credit"
+    ):
+
+        card = transaction.card
+
+        card_spent = Transaction.objects.filter(
+            user=request.user,
+            card=card,
+            status="SUCCESS"
+        ).aggregate(
+            total=Coalesce(
+                Sum("amount"),
+                Decimal("0.00")
+            )
+        )["total"]
+
+        available_credit = (
+            card.credit_limit - card_spent
+        )
+
+        send_low_credit_alert(
+            transaction=transaction,
+            available_credit=available_credit,
+            credit_limit=card.credit_limit,
+        )
+
+    # --------------------------------------------------------
+    # RESPONSE
+    # --------------------------------------------------------
+
     return Response(
         {
             "message": "Transaction status updated successfully",
-            "transaction": TransactionSerializer(transaction).data
+            "transaction": TransactionSerializer(
+                transaction
+            ).data
         },
         status=status.HTTP_200_OK
     )
@@ -396,6 +544,7 @@ def monthly_statement(request):
     current_time = timezone.now()
 
     try:
+
         year = int(
             request.query_params.get(
                 "year",
