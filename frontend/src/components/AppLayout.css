@@ -444,6 +444,19 @@ body {
   font-size: 9px;
 }
 
+.navbar-role-badge {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: rgba(101, 71, 239, 0.15);
+  color: #6547ee;
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  width: fit-content;
+}
+
 /* =====================================================
    LOGOUT
    ===================================================== */

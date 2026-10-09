@@ -1909,3 +1909,344 @@
   }
 
 }
+
+/* =====================================================
+   HEALTH METRICS GRID & SECURITY AUDIT STYLES
+   ===================================================== */
+
+.health-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  max-width: 1280px;
+  margin: 0 auto 30px auto;
+  padding: 0 24px;
+}
+
+.metric-card {
+  background: rgba(16, 28, 48, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(99, 102, 241, 0.4);
+}
+
+.metric-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-bottom: 8px;
+}
+
+.metric-card h3 {
+  font-size: 1.85rem;
+  font-weight: 700;
+  margin: 4px 0 8px 0;
+  color: #f8fafc;
+}
+
+.metric-card p {
+  font-size: 0.82rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.metric-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: rgba(99, 102, 241, 0.15);
+  color: #818cf8;
+}
+
+.error-tag {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
+
+.warning-tag {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+}
+
+.dot-healthy {
+  background-color: #10b981 !important;
+  box-shadow: 0 0 10px #10b981;
+}
+
+.dot-warning {
+  background-color: #f59e0b !important;
+  box-shadow: 0 0 10px #f59e0b;
+}
+
+/* EXPORT BAR */
+.admin-export-bar {
+  max-width: 1280px;
+  margin: 0 auto 30px auto;
+  padding: 20px 24px;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.8));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.export-text h3 {
+  font-size: 1.15rem;
+  margin: 0 0 4px 0;
+  color: #f1f5f9;
+}
+
+.export-text p {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.export-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.export-btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-pdf {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+.btn-csv {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+}
+
+.btn-csv-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.export-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+/* TABLES SECTION */
+.admin-tables-section {
+  max-width: 1280px;
+  margin: 0 auto 40px auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.table-card {
+  background: rgba(16, 28, 48, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.table-card-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table-card-header h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 3px 0;
+  color: #f8fafc;
+}
+
+.table-card-header p {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.badge-count {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(99, 102, 241, 0.2);
+  color: #a5b4fc;
+  font-weight: 600;
+}
+
+.admin-table-wrapper {
+  overflow-x: auto;
+}
+
+.admin-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+.admin-data-table th {
+  padding: 12px 18px;
+  color: #94a3b8;
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.admin-data-table td {
+  padding: 14px 18px;
+  color: #cbd5e1;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.empty-cell {
+  padding: 30px !important;
+  color: #64748b;
+}
+
+.risk-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.risk-high {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.risk-medium {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.risk-low {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+.status-pill {
+  font-size: 0.72rem;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.status-under_review {
+  background: rgba(234, 179, 8, 0.15);
+  color: #facc15;
+}
+
+.status-resolved {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+}
+
+.status-confirmed {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
+
+.status-false_positive {
+  background: rgba(148, 163, 184, 0.15);
+  color: #94a3b8;
+}
+
+.review-action-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.review-action-btns button {
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-resolve {
+  background: #10b981;
+  color: white;
+}
+
+.btn-false {
+  background: #64748b;
+  color: white;
+}
+
+.btn-confirm {
+  background: #ef4444;
+  color: white;
+}
+
+.review-action-btns button:hover {
+  opacity: 0.85;
+}
+
+.audit-action-tag {
+  font-size: 0.72rem;
+  font-family: monospace;
+  padding: 2px 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  color: #38bdf8;
+}
+
+.admin-alert-banner {
+  max-width: 1280px;
+  margin: 0 auto 20px auto;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+}
+
+.alert-error {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+}
+
+.alert-success {
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #6ee7b7;
+}

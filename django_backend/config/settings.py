@@ -92,6 +92,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
 
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # System Health & API response monitoring middleware
+    'transactions.middleware.SystemMonitoringMiddleware',
 ]
 
 

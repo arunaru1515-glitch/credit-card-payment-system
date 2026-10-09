@@ -19,6 +19,9 @@ function AppLayout() {
   const { theme, toggleTheme } = useTheme();
 
   const [username, setUsername] = useState("Arun");
+  const [userRole, setUserRole] = useState(
+    localStorage.getItem("user_role") || "CUSTOMER"
+  );
 
   const isActive = (path) => {
     return location.pathname === path;
@@ -82,6 +85,14 @@ function AppLayout() {
               data.username
             );
           }
+
+          if (data.role) {
+            setUserRole(data.role);
+            localStorage.setItem(
+              "user_role",
+              data.role
+            );
+          }
         }
       } catch (error) {
         console.error(
@@ -141,6 +152,10 @@ function AppLayout() {
 
       localStorage.removeItem(
         "username"
+      );
+
+      localStorage.removeItem(
+        "user_role"
       );
 
       navigate("/login");
@@ -292,8 +307,8 @@ function AppLayout() {
               {username}
             </strong>
 
-            <span>
-              Customer
+            <span className="navbar-role-badge">
+              {userRole}
             </span>
 
           </div>

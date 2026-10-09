@@ -8,8 +8,15 @@ from accounts.views import (
     protected_profile,
     add_card,
     list_cards,
-    delete_card
+    delete_card,
+    block_card,
+    unblock_card,
+    update_credit_limit,
+    list_audit_logs,
+    list_users,
+    update_user_role,
 )
+from transactions.views import system_health_metrics
 
 
 urlpatterns = [
@@ -69,9 +76,56 @@ urlpatterns = [
         name='delete-card'
     ),
 
+    # RBAC - Card Block/Unblock
+    path(
+        'api/cards/<int:card_id>/block/',
+        block_card,
+        name='block-card'
+    ),
+
+    path(
+        'api/cards/<int:card_id>/unblock/',
+        unblock_card,
+        name='unblock-card'
+    ),
+
+    # RBAC - Credit Limit Update
+    path(
+        'api/cards/<int:card_id>/limit/',
+        update_credit_limit,
+        name='update-credit-limit'
+    ),
+
+    # RBAC - Audit Logs
+    path(
+        'api/audit-logs/',
+        list_audit_logs,
+        name='audit-logs'
+    ),
+
+    # RBAC - User & Role Management
+    path(
+        'api/users/',
+        list_users,
+        name='list-users'
+    ),
+
+    path(
+        'api/users/<int:user_id>/role/',
+        update_user_role,
+        name='update-user-role'
+    ),
+
     # Module 4 - Transaction History
     path(
         'api/transactions/',
         include('transactions.urls')
+    ),
+
+    # System Monitoring & Health
+    path(
+        'api/system/health/',
+        system_health_metrics,
+        name='system-health-metrics'
     ),
 ]

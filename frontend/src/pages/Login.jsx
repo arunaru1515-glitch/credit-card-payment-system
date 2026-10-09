@@ -60,6 +60,12 @@ function Login() {
 
       localStorage.setItem("access_token", data.access);
       localStorage.setItem("refresh_token", data.refresh);
+      if (data.role) {
+        localStorage.setItem("user_role", data.role);
+      }
+      if (data.user && data.user.username) {
+        localStorage.setItem("username", data.user.username);
+      }
 
       navigate("/dashboard");
     } catch (err) {

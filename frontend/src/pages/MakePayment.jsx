@@ -389,12 +389,14 @@ function MakePayment() {
                       <option
                         key={card.id}
                         value={card.id}
+                        disabled={card.is_blocked}
                       >
                         {card.card_type === "credit"
                           ? "Credit Card"
                           : "Debit Card"}{" "}
                         - ****{" "}
                         {card.last_four_digits}
+                        {card.is_blocked ? " [BLOCKED]" : ""}
                       </option>
                     ))}
                   </select>

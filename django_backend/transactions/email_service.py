@@ -166,3 +166,72 @@ Credit Card Payment System
         f"LOW CREDIT EMAIL TRIGGERED "
         f"FOR TRANSACTION {transaction.id}"
     )
+
+
+# ============================================================
+# FRAUD ALERT EMAIL
+# ============================================================
+
+def send_fraud_alert_email(transaction, fraud_log):
+    """
+    Triggers an immediate email alert when a transaction is flagged
+    by rule-based fraud detection.
+    """
+    user = transaction.user if transaction else getattr(fraud_log, "user", None)
+
+    if not user or not user.email:
+        print("FRAUD ALERT SKIPPED: User email not available")
+        return
+
+    card_number = "N/A"
+    if transaction and transaction.card:
+        card_number = transaction.card.masked_card_number
+    elif fraud_log and fraud_log.card:
+        card_number = fraud_log.card.masked_card_number
+
+    tx_id = transaction.id if transaction else (fraud_log.transaction_id or "N/A")
+    amount = transaction.amount if transaction else fraud_log.amount
+    risk = fraud_log.risk_level if fraud_log else "HIGH"
+    rule = fraud_log.rule_triggered if fraud_log else "Suspicious Activity"
+    desc = fraud_log.description if fraud_log else "Potential unauthorized activity"
+
+    subject = f"URGENT: Security Alert - Suspicious Activity Detected on Card {card_number}"
+
+    message = f"""
+Dear {user.username},
+
+Our automated fraud detection system has identified suspicious activity on your account.
+
+Alert Summary
+-------------
+Risk Level: {risk}
+Rule Triggered: {rule}
+Transaction ID: {tx_id}
+Card: {card_number}
+Amount: Rs. {amount:,.2f}
+Location: {getattr(fraud_log, 'location', 'Unknown')}
+IP Address: {getattr(fraud_log, 'ip_address', 'N/A')}
+Details: {desc}
+
+Action Taken:
+This transaction has been placed on {risk} risk monitoring and recorded in the audit log for review.
+
+What should you do?
+If you did not authorize this transaction, please log in immediately to block this card and report this activity to our fraud prevention team.
+
+Regards,
+CardPay Fraud Prevention Team
+"""
+
+    email_thread = Thread(
+        target=_send_email,
+        args=(
+            subject,
+            message,
+            user.email,
+        ),
+        daemon=True,
+    )
+    email_thread.start()
+
+    print(f"FRAUD ALERT EMAIL TRIGGERED FOR TRANSACTION {tx_id} (Risk: {risk})")

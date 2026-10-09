@@ -1288,3 +1288,70 @@ The project includes:
 - Docker running screenshot
 
 - Project documentation
+
+---
+
+## 21. Assessment Deliverables (EOD Release)
+
+### 1. Role-Based Access Control (RBAC) & Audit Logs
+- **Roles Implemented**:
+  - `ADMIN`: Full access to user role management, credit limits, card deletion, fraud alert reviews, audit logs, system monitoring.
+  - `SUPPORT`: Card block/unblock, view transactions, inspect audit logs, review fraud alerts. Cannot alter credit limits or delete cards.
+  - `READ_ONLY`: Full read/inspection rights for transactions, cards, analytics, and audit logs. All write/mutating operations are denied (`403 Forbidden`).
+  - `CUSTOMER`: Standard customer operations restricted to own cards and transactions.
+- **Role Permission Checks**:
+  - `POST /api/cards/` (Customer, Admin; blocked for Read-Only)
+  - `DELETE /api/cards/<id>/` (Admin for any, Customer for own; blocked for Support & Read-Only)
+  - `POST /api/cards/<id>/block/` & `/unblock/` (Admin & Support only)
+  - `PATCH /api/cards/<id>/limit/` (Admin only)
+  - `GET /api/audit-logs/` (Admin, Support, Read-Only)
+- **Audit Logging Structure**:
+  - Tracks `actor`, `action` (`CARD_BLOCK`, `CARD_UNBLOCK`, `CREDIT_LIMIT_UPDATE`, `ROLE_UPDATE`, `CARD_DELETE`), `target_type`, `target_id`, `description`, `old_value`, `new_value`, `ip_address`, and timestamp.
+
+### 2. Rule-Based Fraud Detection & Alerting
+- **Engine Rules**:
+  1. **Multiple High-Value Transactions in Short Time**: Detects burst spending where multiple transactions exceed ₹10,000 within a 10-minute window or cumulative spending exceeds ₹25,000 (`HIGH` risk).
+  2. **Rapid Transactions from Different Locations / Devices**: Flags rapid subsequent transactions initiated within 15 minutes with mismatched geographical locations or devices (`HIGH`/`MEDIUM` risk).
+  3. **Velocity Surge Detection**: Flags high frequency (>3 transactions within 2 minutes).
+- **Fraud Status & Audit**:
+  - Transaction field `fraud_status`: `CLEAN`, `SUSPICIOUS`, `FLAGGED`, `BLOCKED`.
+  - Database model `FraudLog`: Stores attempt details, risk level, rules triggered, IP address, and location.
+  - Asynchronous background email alerting (`send_fraud_alert_email`).
+  - Staff management endpoints:
+    - `GET /api/transactions/fraud-logs/`
+    - `PATCH /api/transactions/fraud-logs/<id>/review/` (Status: `CONFIRMED`, `FALSE_POSITIVE`, `RESOLVED`)
+
+### 3. Analytics & Search Optimization
+- **Card Usage Analytics API** (`/api/transactions/analytics/card-usage/`):
+  - **Monthly Spending Summary**: Complete 12-month spending trend and transaction volumes.
+  - **Category-Wise Expense Data**: Category distribution across `Groceries`, `Dining`, `Shopping`, `Utilities`, `Travel`, `Entertainment`, `Healthcare`, `General`, with percentage share.
+  - **Credit Utilization Percentage**: Overall utilization % across credit lines and per-card breakdown.
+- **Advanced Transaction Search & Filtering**:
+  - Date Range (`start_date`, `end_date`)
+  - Amount Range (`min_amount`, `max_amount`)
+  - Status Filter (`status`)
+  - Category Filter (`category`)
+  - Masked Card / Last 4 Digits Search (`search`)
+  - Server-Side Sorting (`sort_by`: `transaction_date`, `-transaction_date`, `amount`, `-amount`)
+  - Server-Side Pagination (`page`, `page_size`)
+- **Query Optimization**:
+  - Composite indexes on `[user, -transaction_date]`, `[status, -transaction_date]`, `[category, -transaction_date]`, and `[fraud_status]`.
+  - Efficient queries using `select_related('card', 'user')` and database aggregations.
+
+### 4. System Health Monitoring & Data Export
+- **Monitoring Middleware & Database Auditing**:
+  - `SystemMonitoringMiddleware` logs response times, status codes, endpoints, and client IPs into `APIMetricLog`.
+  - Unhandled errors and failure logs tracked.
+- **System Health API** (`/api/system/health/`):
+  - Database connectivity test & latency (ms).
+  - Average API response time and failure rate percentage.
+  - Status code breakdown (2xx, 4xx, 5xx) and slow request count (>500ms).
+- **Export Options**:
+  - Analytics Summary to PDF: `GET /api/transactions/analytics/export/pdf/`
+  - Analytics Summary to CSV: `GET /api/transactions/analytics/export/csv/`
+  - Filtered Transactions to CSV: `GET /api/transactions/export/csv/`
+  - Monthly Statement to PDF: `GET /api/transactions/monthly-statement/`
+- **Frontend Enhancements**:
+  - Interactive charts (monthly bar chart, category distribution, credit utilization gauge) in user dashboard.
+  - Live system health monitor, fraud alert review actions, and export buttons in admin dashboard.
+  - Advanced search filters, pagination controls, and CSV export in transaction history.

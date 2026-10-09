@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.utils import timezone
 from django.db.models import Sum, Count
 
-from .models import Transaction
+from .models import Transaction, FraudLog, APIMetricLog
 
 
 @admin.action(description="Export selected transactions to CSV")
@@ -26,6 +26,8 @@ def export_transactions_csv(modeladmin, request, queryset):
         "Card",
         "Amount",
         "Status",
+        "Category",
+        "Fraud Status",
         "Transaction Date",
     ])
 
@@ -40,6 +42,8 @@ def export_transactions_csv(modeladmin, request, queryset):
             ),
             transaction.amount,
             transaction.status,
+            transaction.category,
+            transaction.fraud_status,
             transaction.transaction_date,
         ])
 
@@ -194,18 +198,22 @@ class TransactionAdmin(admin.ModelAdmin):
         "card",
         "amount",
         "status",
+        "category",
+        "fraud_status",
         "transaction_date",
     )
 
     list_filter = (
         "status",
+        "category",
+        "fraud_status",
         "transaction_date",
-        "amount",
     )
 
     search_fields = (
         "user__username",
         "user__email",
+        "card__masked_card_number",
     )
 
     ordering = (
@@ -216,3 +224,52 @@ class TransactionAdmin(admin.ModelAdmin):
         export_transactions_csv,
         daily_payment_summary,
     ]
+
+
+@admin.register(FraudLog)
+class FraudLogAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "user",
+        "transaction",
+        "amount",
+        "risk_level",
+        "rule_triggered",
+        "status",
+        "created_at",
+    )
+    list_filter = (
+        "risk_level",
+        "status",
+        "created_at",
+    )
+    search_fields = (
+        "user__username",
+        "rule_triggered",
+        "description",
+    )
+    ordering = ("-created_at",)
+
+
+@admin.register(APIMetricLog)
+class APIMetricLogAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "method",
+        "endpoint",
+        "status_code",
+        "response_time_ms",
+        "user",
+        "timestamp",
+    )
+    list_filter = (
+        "status_code",
+        "method",
+        "timestamp",
+    )
+    search_fields = (
+        "endpoint",
+        "user__username",
+        "ip_address",
+    )
+    ordering = ("-timestamp",)

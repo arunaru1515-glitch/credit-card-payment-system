@@ -1900,3 +1900,111 @@
   }
 
 }
+
+/* =====================================================
+   ADVANCED SEARCH & PAGINATION STYLES
+   ===================================================== */
+
+.export-csv-btn {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  color: white !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.export-csv-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  padding: 0 4px;
+}
+
+.results-header h3 {
+  font-size: 1rem;
+  color: #94a3b8;
+  margin: 0;
+  font-weight: 600;
+}
+
+.results-header span {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.category-tag {
+  font-size: 0.72rem;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: rgba(99, 102, 241, 0.15);
+  color: #a5b4fc;
+  font-weight: 500;
+}
+
+.fraud-pill {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.fraud-clean {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+}
+
+.fraud-suspicious {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+}
+
+.fraud-flagged {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.pagination-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 14px;
+}
+
+.pagination-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: rgba(99, 102, 241, 0.3);
+  border-color: #6366f1;
+  color: white;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  font-size: 0.85rem;
+  color: #94a3b8;
+}

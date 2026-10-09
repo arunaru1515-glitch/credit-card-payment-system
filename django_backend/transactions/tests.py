@@ -5,7 +5,7 @@ from django.test import TestCase
 from rest_framework.test import APIClient
 
 from accounts.models import Card
-from .models import Transaction
+from .models import Transaction, FraudLog, APIMetricLog
 
 
 User = get_user_model()
@@ -687,3 +687,246 @@ class TransactionManagementTests(TestCase):
             response.status_code,
             401
         )
+
+
+class NewFeaturesAndAnalyticsTests(TestCase):
+    """
+    Comprehensive tests for:
+    - Rule-based Fraud Detection logic
+    - Fraud log management & staff review
+    - Card Usage Analytics (Monthly, Categories, Credit Utilization)
+    - Advanced Search, sorting, and server-side pagination
+    - System health monitoring API
+    - CSV and PDF export endpoints
+    """
+
+    def setUp(self):
+        self.client = APIClient()
+
+        self.admin_user = User.objects.create_user(
+            username="adminuser",
+            email="adminuser@example.com",
+            password="Admin@12345",
+            role=User.ROLE_ADMIN,
+        )
+
+        self.support_user = User.objects.create_user(
+            username="supportuser",
+            email="supportuser@example.com",
+            password="Support@12345",
+            role=User.ROLE_SUPPORT,
+        )
+
+        self.read_only_user = User.objects.create_user(
+            username="readonlyuser",
+            email="readonly@example.com",
+            password="ReadOnly@12345",
+            role=User.ROLE_READ_ONLY,
+        )
+
+        self.customer = User.objects.create_user(
+            username="testcustomer",
+            email="customer@example.com",
+            password="Customer@12345",
+            role=User.ROLE_CUSTOMER,
+        )
+
+        self.card = Card.objects.create(
+            user=self.customer,
+            card_type="credit",
+            masked_card_number="**** **** **** 8888",
+            last_four_digits="8888",
+            credit_limit=Decimal("100000.00"),
+        )
+
+    def test_fraud_detection_high_value_burst(self):
+        self.client.force_authenticate(user=self.customer)
+
+        # 1st high-value transaction
+        Transaction.objects.create(
+            user=self.customer,
+            card=self.card,
+            amount=Decimal("15000.00"),
+            status="SUCCESS",
+        )
+
+        # 2nd high-value transaction within 10 minutes -> should trigger fraud rule
+        response = self.client.post(
+            "/api/transactions/create/",
+            {
+                "card_id": self.card.id,
+                "amount": "12000.00",
+                "category": "Shopping",
+            },
+            format="json"
+        )
+
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.data["transaction"]["fraud_status"], "FLAGGED")
+
+        fraud_log = FraudLog.objects.filter(user=self.customer).first()
+        self.assertIsNotNone(fraud_log)
+        self.assertEqual(fraud_log.risk_level, "HIGH")
+        self.assertIn("Multiple high-value transactions", fraud_log.rule_triggered)
+
+    def test_fraud_detection_rapid_locations(self):
+        self.client.force_authenticate(user=self.customer)
+
+        # Initial transaction in Delhi
+        t1 = Transaction.objects.create(
+            user=self.customer,
+            card=self.card,
+            amount=Decimal("1000.00"),
+            status="SUCCESS",
+            location="Delhi",
+        )
+
+        # Rapid subsequent transaction claiming location New York
+        response = self.client.post(
+            "/api/transactions/create/",
+            {
+                "card_id": self.card.id,
+                "amount": "2000.00",
+                "location": "New York",
+            },
+            format="json"
+        )
+
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.data["transaction"]["fraud_status"], "FLAGGED")
+
+        fraud_log = FraudLog.objects.filter(location="New York").first()
+        self.assertIsNotNone(fraud_log)
+        self.assertIn("different locations", fraud_log.rule_triggered)
+
+    def test_fraud_log_staff_review(self):
+        log = FraudLog.objects.create(
+            user=self.customer,
+            amount=Decimal("12000.00"),
+            risk_level="HIGH",
+            rule_triggered="Multiple high-value transactions",
+            status="UNDER_REVIEW",
+        )
+
+        # Customer forbidden
+        self.client.force_authenticate(user=self.customer)
+        res_cust = self.client.get("/api/transactions/fraud-logs/")
+        self.assertEqual(res_cust.status_code, 403)
+
+        # Support user allowed
+        self.client.force_authenticate(user=self.support_user)
+        res_supp = self.client.get("/api/transactions/fraud-logs/")
+        self.assertEqual(res_supp.status_code, 200)
+
+        # Review action
+        res_review = self.client.patch(
+            f"/api/transactions/fraud-logs/{log.id}/review/",
+            {"status": "RESOLVED"},
+            format="json"
+        )
+        self.assertEqual(res_review.status_code, 200)
+        log.refresh_from_db()
+        self.assertEqual(log.status, "RESOLVED")
+        self.assertEqual(log.reviewed_by, self.support_user)
+
+    def test_card_usage_analytics_api(self):
+        self.client.force_authenticate(user=self.customer)
+
+        Transaction.objects.create(
+            user=self.customer,
+            card=self.card,
+            amount=Decimal("5000.00"),
+            category="Groceries",
+            status="SUCCESS",
+        )
+        Transaction.objects.create(
+            user=self.customer,
+            card=self.card,
+            amount=Decimal("15000.00"),
+            category="Dining",
+            status="SUCCESS",
+        )
+
+        response = self.client.get("/api/transactions/analytics/card-usage/")
+        self.assertEqual(response.status_code, 200)
+
+        data = response.data
+        self.assertIn("monthly_spending", data)
+        self.assertIn("category_expenses", data)
+        self.assertIn("credit_utilization", data)
+
+        # Verify utilization calculation (20000 spent out of 100000 limit = 20%)
+        self.assertEqual(data["credit_utilization"]["total_credit_spent"], 20000.0)
+        self.assertEqual(data["credit_utilization"]["utilization_percentage"], 20.0)
+
+    def test_advanced_search_and_pagination(self):
+        self.client.force_authenticate(user=self.customer)
+
+        t1 = Transaction.objects.create(
+            user=self.customer,
+            card=self.card,
+            amount=Decimal("1000.00"),
+            category="Groceries",
+            status="SUCCESS",
+        )
+        t2 = Transaction.objects.create(
+            user=self.customer,
+            card=self.card,
+            amount=Decimal("4000.00"),
+            category="Dining",
+            status="SUCCESS",
+        )
+        t3 = Transaction.objects.create(
+            user=self.customer,
+            card=self.card,
+            amount=Decimal("9000.00"),
+            category="Travel",
+            status="FAILED",
+            failure_reason="Declined",
+        )
+
+        # Filter by Category
+        res_cat = self.client.get("/api/transactions/?category=Groceries")
+        self.assertEqual(res_cat.status_code, 200)
+        self.assertEqual(len(res_cat.data), 1)
+
+        # Server-side pagination
+        res_page = self.client.get("/api/transactions/?page=1&page_size=2&sort_by=amount_desc")
+        self.assertEqual(res_page.status_code, 200)
+        self.assertEqual(res_page.data["count"], 3)
+        self.assertEqual(res_page.data["total_pages"], 2)
+        self.assertEqual(len(res_page.data["results"]), 2)
+        # Highest amount first: 9000
+        self.assertEqual(Decimal(str(res_page.data["results"][0]["amount"])), Decimal("9000.00"))
+
+    def test_system_health_monitoring_api(self):
+        # Customer forbidden
+        self.client.force_authenticate(user=self.customer)
+        res_cust = self.client.get("/api/system/health/")
+        self.assertEqual(res_cust.status_code, 403)
+
+        # Admin allowed
+        self.client.force_authenticate(user=self.admin_user)
+        res_admin = self.client.get("/api/system/health/")
+        self.assertEqual(res_admin.status_code, 200)
+        self.assertEqual(res_admin.data["status"], "HEALTHY")
+        self.assertIn("performance", res_admin.data)
+        self.assertIn("database", res_admin.data)
+
+    def test_analytics_and_transaction_exports(self):
+        self.client.force_authenticate(user=self.customer)
+
+        # CSV Export for Analytics
+        res_csv = self.client.get("/api/transactions/analytics/export/csv/")
+        self.assertEqual(res_csv.status_code, 200)
+        self.assertEqual(res_csv["Content-Type"], "text/csv")
+
+        # PDF Export for Analytics
+        res_pdf = self.client.get("/api/transactions/analytics/export/pdf/")
+        self.assertEqual(res_pdf.status_code, 200)
+        self.assertEqual(res_pdf["Content-Type"], "application/pdf")
+
+        # CSV Export for Filtered Transactions
+        res_tx_csv = self.client.get("/api/transactions/export/csv/")
+        self.assertEqual(res_tx_csv.status_code, 200)
+        self.assertEqual(res_tx_csv["Content-Type"], "text/csv")
