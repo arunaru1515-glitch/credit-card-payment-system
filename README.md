@@ -322,7 +322,12 @@ credit_card_payment_system/
 │       ├── Make_Payment.png
 │       ├── Transactions.png
 │       ├── Admin_dashboard.png
-│       ├── Django_admin_panel.png
+│       ├── Django_admin(Users).png
+│       ├── Django_admin(Cards).png
+│       ├── Django_admin(Transactions).png
+│       ├── Django_admin(Fraud_logs).png
+│       ├── Django_admin(audit_log).png
+│       ├── Django_admin(api_metrics_log).png
 │       ├── Docker_Desktop.png
 │       ├── Fastapi_swagger.png
 │       └── Postman_Testing.png
@@ -974,9 +979,29 @@ http://localhost:8000/admin/
 
 ![Admin Dashboard](docs/screenshots/Admin_dashboard.png)
 
-### Django Admin Panel
+### Django Admin – Users Management
 
-![Django Admin Panel](docs/screenshots/Django_admin_panel.png)
+![Django Admin Users](<docs/screenshots/Django_admin(Users).png>)
+
+### Django Admin – Cards Management
+
+![Django Admin Cards](<docs/screenshots/Django_admin(Cards).png>)
+
+### Django Admin – Transactions Management
+
+![Django Admin Transactions](<docs/screenshots/Django_admin(Transactions).png>)
+
+### Django Admin – Rule-Based Fraud Detection Logs
+
+![Django Admin Fraud Logs](<docs/screenshots/Django_admin(Fraud_logs).png>)
+
+### Django Admin – System Audit Logs
+
+![Django Admin Audit Logs](<docs/screenshots/Django_admin(audit_log).png>)
+
+### Django Admin – API Performance & Health Metrics Logs
+
+![Django Admin API Metrics Log](<docs/screenshots/Django_admin(api_metrics_log).png>)
 
 ### Docker Desktop
 
@@ -1088,7 +1113,7 @@ The project includes:
 
 - UI screenshots
 
-- Django Admin screenshot
+- Django Admin screenshots (Users, Cards, Transactions, Fraud Logs, Audit Logs, API Metrics)
 
 - FastAPI Swagger screenshot
 
