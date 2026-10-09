@@ -21,7 +21,8 @@ DJANGO_BASE_URL = os.getenv(
 async def process_payment(
     card_id: int,
     amount: Decimal,
-    authorization: str
+    authorization: str,
+    category: str = "General"
 ):
 
     async with httpx.AsyncClient() as client:
@@ -42,7 +43,8 @@ async def process_payment(
             f"{DJANGO_BASE_URL}/api/transactions/create/",
             json={
                 "card_id": card_id,
-                "amount": float(amount)
+                "amount": float(amount),
+                "category": category
             },
             headers={
                 "Authorization": authorization
@@ -75,20 +77,18 @@ async def process_payment(
         transaction_id = transaction["id"]
 
         # ==================================================
-        # STEP 2: PAYMENT PROCESSING
-        # ==================================================
-        #
-        # Credit-limit validation has already been completed
-        # by Django.
-        #
-        # If we reached this point, the selected card has
-        # sufficient available credit.
-        #
+        # STEP 2: APPLY SIMULATED PAYMENT GATEWAY RULE
         # ==================================================
 
-        final_status = "SUCCESS"
-
-        failure_reason = None
+        if amount > Decimal("100000.00"):
+            final_status = "FAILED"
+            failure_reason = (
+                "Payment declined because the amount exceeds "
+                "the simulated gateway limit of ₹100,000"
+            )
+        else:
+            final_status = "SUCCESS"
+            failure_reason = None
 
         # ==================================================
         # STEP 3: UPDATE TRANSACTION STATUS

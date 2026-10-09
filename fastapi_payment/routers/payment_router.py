@@ -19,6 +19,7 @@ security = HTTPBearer()
 class PaymentRequest(BaseModel):
     card_id: int
     amount: Decimal = Field(gt=0)
+    category: str = "General"
 
 
 @router.post(
@@ -34,7 +35,8 @@ async def make_payment(
     result = await process_payment(
         card_id=data.card_id,
         amount=data.amount,
-        authorization=authorization
+        authorization=authorization,
+        category=data.category
     )
 
     if not result.get("success"):

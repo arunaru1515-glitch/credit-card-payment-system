@@ -62,6 +62,14 @@ function Dashboard() {
         Authorization: `Bearer ${accessToken}`,
       };
 
+      const fetchDashboardSummary = async () => {
+        try {
+          const res = await fetch(`${FASTAPI_BASE_URL}/dashboard/summary`, { headers });
+          if (res.ok) return res;
+        } catch (_) {}
+        return fetch(`${DJANGO_BASE_URL}/api/transactions/dashboard/summary/`, { headers });
+      };
+
       const [
         profileResponse,
         cardsResponse,
@@ -70,7 +78,7 @@ function Dashboard() {
       ] = await Promise.all([
         fetch(`${DJANGO_BASE_URL}/api/profile/`, { headers }),
         fetch(`${DJANGO_BASE_URL}/api/cards/list/`, { headers }),
-        fetch(`${FASTAPI_BASE_URL}/dashboard/summary`, { headers }),
+        fetchDashboardSummary(),
         fetch(`${DJANGO_BASE_URL}/api/transactions/analytics/card-usage/`, { headers }),
       ]);
 
@@ -471,43 +479,41 @@ function Dashboard() {
 
         {/* QUICK NAVIGATION */}
         <section className="quick-actions">
-          <div className="quick-grid">
-            <Link to="/add-card" className="quick-card blue-border">
-              <div className="quick-icon blue">+</div>
-              <div className="quick-content">
-                <h3>Add New Card</h3>
-                <p>Link a credit or debit card.</p>
-              </div>
-              <span className="quick-arrow">→</span>
-            </Link>
+          <Link to="/add-card" className="quick-card blue-border">
+            <div className="quick-icon blue">+</div>
+            <div className="quick-content">
+              <h3>Add New Card</h3>
+              <p>Link a credit or debit card.</p>
+            </div>
+            <span className="quick-arrow">→</span>
+          </Link>
 
-            <Link to="/make-payment" className="quick-card purple-border">
-              <div className="quick-icon purple">₹</div>
-              <div className="quick-content">
-                <h3>Make Payment</h3>
-                <p>Process a secure transaction.</p>
-              </div>
-              <span className="quick-arrow">→</span>
-            </Link>
+          <Link to="/make-payment" className="quick-card purple-border">
+            <div className="quick-icon purple">₹</div>
+            <div className="quick-content">
+              <h3>Make Payment</h3>
+              <p>Process a secure transaction.</p>
+            </div>
+            <span className="quick-arrow">→</span>
+          </Link>
 
-            <Link to="/transactions" className="quick-card cyan-border">
-              <div className="quick-icon cyan">≡</div>
-              <div className="quick-content">
-                <h3>Transaction History</h3>
-                <p>Advanced search & filters.</p>
-              </div>
-              <span className="quick-arrow">→</span>
-            </Link>
+          <Link to="/transactions" className="quick-card cyan-border">
+            <div className="quick-icon cyan">≡</div>
+            <div className="quick-content">
+              <h3>Transaction History</h3>
+              <p>Advanced search & filters.</p>
+            </div>
+            <span className="quick-arrow">→</span>
+          </Link>
 
-            <Link to="/admin-dashboard" className="quick-card slate-border">
-              <div className="quick-icon slate">🛡️</div>
-              <div className="quick-content">
-                <h3>Admin & Security</h3>
-                <p>Live health, logs & fraud alerts.</p>
-              </div>
-              <span className="quick-arrow">→</span>
-            </Link>
-          </div>
+          <Link to="/admin-dashboard" className="quick-card slate-border">
+            <div className="quick-icon slate">🛡️</div>
+            <div className="quick-content">
+              <h3>Admin & Security</h3>
+              <p>Live health, logs & fraud alerts.</p>
+            </div>
+            <span className="quick-arrow">→</span>
+          </Link>
         </section>
 
         {/* LOWER SECTION: SAVED CARDS & LAST 5 TRANSACTIONS */}

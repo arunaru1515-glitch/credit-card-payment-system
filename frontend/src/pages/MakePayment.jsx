@@ -13,6 +13,7 @@ function MakePayment() {
   const [formData, setFormData] = useState({
     card_id: "",
     amount: "",
+    category: "General",
   });
 
   const [loadingCards, setLoadingCards] = useState(true);
@@ -100,6 +101,7 @@ function MakePayment() {
 
     const cardId = Number(formData.card_id);
     const amount = Number(formData.amount);
+    const category = formData.category || "General";
 
     if (!formData.card_id) {
       setError("Please select a saved card.");
@@ -134,6 +136,7 @@ function MakePayment() {
           body: JSON.stringify({
             card_id: cardId,
             amount: amount,
+            category: category,
           }),
         }
       );
@@ -404,6 +407,33 @@ function MakePayment() {
                 </div>
 
 
+                {/* CATEGORY SELECTOR */}
+
+                <div className="payment-field">
+
+                  <label htmlFor="category">
+                    Category
+                  </label>
+
+                  <select
+                    id="category"
+                    name="category"
+                    value={formData.category}
+                    onChange={handleChange}
+                  >
+                    <option value="Shopping">Shopping</option>
+                    <option value="Groceries">Groceries</option>
+                    <option value="Dining">Food & Dining</option>
+                    <option value="Utilities">Utilities & Bills</option>
+                    <option value="Travel">Travel & Commute</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="General">General</option>
+                  </select>
+
+                </div>
+
+
                 {/* PAYMENT AMOUNT */}
 
                 <div className="payment-field">
@@ -489,6 +519,21 @@ function MakePayment() {
                   {formData.card_id
                     ? `**** ${selectedLastFour}`
                     : "Not selected"}
+                </strong>
+
+              </div>
+
+
+              {/* CATEGORY */}
+
+              <div className="summary-row">
+
+                <span>
+                  Category
+                </span>
+
+                <strong className="summary-category-badge">
+                  {formData.category || "General"}
                 </strong>
 
               </div>

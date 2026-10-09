@@ -41,6 +41,9 @@ services:
 
     container_name: credit_card_django
 
+    volumes:
+      - ./django_backend:/app
+
     environment:
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
@@ -71,6 +74,9 @@ services:
       dockerfile: Dockerfile
 
     container_name: credit_card_fastapi
+
+    volumes:
+      - ./fastapi_payment:/app
 
     environment:
       DJANGO_BASE_URL: http://django:8000

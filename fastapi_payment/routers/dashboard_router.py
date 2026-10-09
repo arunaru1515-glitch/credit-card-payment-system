@@ -1,6 +1,7 @@
+import os
+import httpx
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-import httpx
 
 
 router = APIRouter(
@@ -12,8 +13,13 @@ router = APIRouter(
 security = HTTPBearer()
 
 
+DJANGO_BASE_URL = os.getenv(
+    "DJANGO_BASE_URL",
+    "http://127.0.0.1:8000"
+)
+
 DJANGO_DASHBOARD_URL = (
-    "http://django:8000/api/transactions/dashboard/summary/"
+    f"{DJANGO_BASE_URL}/api/transactions/dashboard/summary/"
 )
 
 
@@ -31,7 +37,7 @@ async def get_dashboard_summary(
     }
 
     try:
-        async with httpx.AsyncClient() as client:
+        async with httpx.AsyncClient(timeout=30.0) as client:
             response = await client.get(
                 DJANGO_DASHBOARD_URL,
                 headers=headers

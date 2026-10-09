@@ -2,14 +2,12 @@
   "info": {
     "_postman_id": "41007d2c-234f-4692-91ff-a56063e25868",
     "name": "Credit Card Payment System API",
-    "description": "Postman collection for the Credit Card Payment System. Includes FastAPI gateway endpoints, Django REST endpoints, JWT authentication, card management, payments, and transaction management.",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "57930533",
-    "_collection_link": "https://go.postman.co/collection/57930533-41007d2c-234f-4692-91ff-a56063e25868?source=collection_link"
+    "description": "Complete Postman collection for the Credit Card Payment System. Includes FastAPI gateway endpoints, Django REST endpoints, JWT authentication, card management, payment processing, RBAC role management, audit logging, rule-based fraud detection, analytics, reporting exports (CSV/PDF), and system health monitoring.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
     {
-      "name": "FastAPI Gateway",
+      "name": "1. FastAPI Gateway",
       "item": [
         {
           "name": "Register User",
@@ -23,7 +21,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"username\": \"postmanuser\",\n  \"email\": \"postmanuser@example.com\",\n  \"password\": \"Postman@12345\"\n}"
+              "raw": "{\n  \"username\": \"fastapi_user\",\n  \"email\": \"fastapi_user@example.com\",\n  \"password\": \"SecurePassword@123\"\n}"
             },
             "url": {
               "raw": "{{fastapi_base_url}}/auth/register",
@@ -46,10 +44,18 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Login successful', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Login successful (Status 200)', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
                   "const data = pm.response.json();",
-                  "if (data.access) pm.collectionVariables.set('access_token', data.access);",
-                  "if (data.refresh) pm.collectionVariables.set('refresh_token', data.refresh);"
+                  "if (data.access) {",
+                  "    pm.collectionVariables.set('access_token', data.access);",
+                  "    pm.environment.set('access_token', data.access);",
+                  "}",
+                  "if (data.refresh) {",
+                  "    pm.collectionVariables.set('refresh_token', data.refresh);",
+                  "    pm.environment.set('refresh_token', data.refresh);",
+                  "}"
                 ]
               }
             }
@@ -103,38 +109,25 @@
           "response": []
         },
         {
-          "name": "Logout User",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{access_token}}"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"refresh\": \"{{refresh_token}}\"\n}"
-            },
-            "url": {
-              "raw": "{{fastapi_base_url}}/auth/logout",
-              "host": [
-                "{{fastapi_base_url}}"
-              ],
-              "path": [
-                "auth",
-                "logout"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
           "name": "Add Card",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Card created successfully (Status 201)', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "const data = pm.response.json();",
+                  "if (data.card && data.card.id) {",
+                  "    pm.collectionVariables.set('card_id', String(data.card.id));",
+                  "    pm.environment.set('card_id', String(data.card.id));",
+                  "}"
+                ]
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -218,9 +211,14 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Payment request returned success', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Payment returned success (Status 200)', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
                   "const data = pm.response.json();",
-                  "if (data.payment && data.payment.transaction_id) pm.collectionVariables.set('transaction_id', String(data.payment.transaction_id));"
+                  "if (data.payment && data.payment.transaction_id) {",
+                  "    pm.collectionVariables.set('transaction_id', String(data.payment.transaction_id));",
+                  "    pm.environment.set('transaction_id', String(data.payment.transaction_id));",
+                  "}"
                 ]
               }
             }
@@ -239,7 +237,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"card_id\": {{card_id}},\n  \"amount\": 5000.00\n}"
+              "raw": "{\n  \"card_id\": 1,\n  \"amount\": 2500.0,\n  \"category\": \"Dining\"\n}"
             },
             "url": {
               "raw": "{{fastapi_base_url}}/payments/",
@@ -255,14 +253,22 @@
           "response": []
         },
         {
-          "name": "Make Payment - Failure Simulation",
+          "name": "Make Payment - Failure Simulation (Limit or Gateway)",
           "event": [
             {
               "listen": "test",
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test(\"Payment returned 200\", function () {\r\n    pm.response.to.have.status(200);\r\n});\r\n\r\npm.test(\"Payment status is FAILED\", function () {\r\n    const response = pm.response.json();\r\n    pm.expect(response.payment.final_status).to.eql(\"FAILED\");\r\n});"
+                  "pm.test('Payment processed with expected decline or validation', function () {",
+                  "    pm.expect([200, 400]).to.include(pm.response.code);",
+                  "});",
+                  "const data = pm.response.json();",
+                  "if (pm.response.code === 200) {",
+                  "    pm.expect(data.payment.final_status).to.eql('FAILED');",
+                  "} else {",
+                  "    pm.expect(data.detail || data.error).to.exist;",
+                  "}"
                 ]
               }
             }
@@ -281,12 +287,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"card_id\": {{card_id}},\n  \"amount\": 100001.00\n}",
-              "options": {
-                "raw": {
-                  "language": "text"
-                }
-              }
+              "raw": "{\n  \"card_id\": 1,\n  \"amount\": 100001.0,\n  \"category\": \"General\"\n}"
             },
             "url": {
               "raw": "{{fastapi_base_url}}/payments/",
@@ -309,9 +310,11 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Dashboard summary returned 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Dashboard summary returned 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
                   "const data = pm.response.json();",
-                  "pm.test('Required dashboard fields are present', function () {",
+                  "pm.test('Required dashboard summary fields are present', function () {",
                   "    pm.expect(data).to.have.property('total_transactions');",
                   "    pm.expect(data).to.have.property('total_amount_spent');",
                   "    pm.expect(data).to.have.property('current_month_spending');",
@@ -347,7 +350,38 @@
           "response": []
         },
         {
-          "name": "FastAPI Swagger",
+          "name": "Logout User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh\": \"{{refresh_token}}\"\n}"
+            },
+            "url": {
+              "raw": "{{fastapi_base_url}}/auth/logout",
+              "host": [
+                "{{fastapi_base_url}}"
+              ],
+              "path": [
+                "auth",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "FastAPI Swagger Docs",
           "request": {
             "method": "GET",
             "header": [],
@@ -366,7 +400,7 @@
       ]
     },
     {
-      "name": "Django REST API",
+      "name": "2. Django REST API - Authentication",
       "item": [
         {
           "name": "Django Register User",
@@ -380,7 +414,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"username\": \"djangouser\",\n  \"email\": \"djangouser@example.com\",\n  \"password\": \"Django@12345\"\n}"
+              "raw": "{\n  \"username\": \"djangouser_test\",\n  \"email\": \"djangouser_test@example.com\",\n  \"password\": \"SecurePassword@123\"\n}"
             },
             "url": {
               "raw": "{{django_base_url}}/api/register/",
@@ -404,10 +438,18 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Django login successful', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Django login successful (Status 200)', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
                   "const data = pm.response.json();",
-                  "if (data.access) pm.collectionVariables.set('access_token', data.access);",
-                  "if (data.refresh) pm.collectionVariables.set('refresh_token', data.refresh);"
+                  "if (data.access) {",
+                  "    pm.collectionVariables.set('access_token', data.access);",
+                  "    pm.environment.set('access_token', data.access);",
+                  "}",
+                  "if (data.refresh) {",
+                  "    pm.collectionVariables.set('refresh_token', data.refresh);",
+                  "    pm.environment.set('refresh_token', data.refresh);",
+                  "}"
                 ]
               }
             }
@@ -463,7 +505,126 @@
           "response": []
         },
         {
-          "name": "Django List Cards",
+          "name": "Django Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh\": \"{{refresh_token}}\"\n}"
+            },
+            "url": {
+              "raw": "{{django_base_url}}/api/logout/",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "logout",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3. Django REST API - Card Management",
+      "item": [
+        {
+          "name": "Add Card (Credit)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Card created successfully', function () {",
+                  "    pm.expect([201, 200]).to.include(pm.response.code);",
+                  "});",
+                  "const data = pm.response.json();",
+                  "if (data.card && data.card.id) {",
+                  "    pm.collectionVariables.set('card_id', String(data.card.id));",
+                  "    pm.environment.set('card_id', String(data.card.id));",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"card_number\": \"5500000000000004\",\n  \"card_type\": \"credit\"\n}"
+            },
+            "url": {
+              "raw": "{{django_base_url}}/api/cards/",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "cards",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add Card (Debit)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"card_number\": \"4242424242424242\",\n  \"card_type\": \"debit\"\n}"
+            },
+            "url": {
+              "raw": "{{django_base_url}}/api/cards/",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "cards",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Saved Cards",
           "request": {
             "method": "GET",
             "header": [
@@ -488,7 +649,325 @@
           "response": []
         },
         {
-          "name": "Django Transaction History",
+          "name": "Delete Card",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{django_base_url}}/api/cards/{{card_id}}/",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "cards",
+                "{{card_id}}",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "4. Django REST API - RBAC & Admin Ops",
+      "item": [
+        {
+          "name": "List Users & Roles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{django_base_url}}/api/users/",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update User Role",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"SUPPORT\"\n}"
+            },
+            "url": {
+              "raw": "{{django_base_url}}/api/users/{{user_id}}/role/",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "{{user_id}}",
+                "role",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Block Card",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{django_base_url}}/api/cards/{{card_id}}/block/",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "cards",
+                "{{card_id}}",
+                "block",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Unblock Card",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{django_base_url}}/api/cards/{{card_id}}/unblock/",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "cards",
+                "{{card_id}}",
+                "unblock",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Credit Limit",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"credit_limit\": 150000.0\n}"
+            },
+            "url": {
+              "raw": "{{django_base_url}}/api/cards/{{card_id}}/limit/",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "cards",
+                "{{card_id}}",
+                "limit",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Audit Logs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{django_base_url}}/api/audit-logs/",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "audit-logs",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Filter Audit Logs by Action",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{django_base_url}}/api/audit-logs/?action=CARD_BLOCK",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "audit-logs",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "action",
+                  "value": "CARD_BLOCK"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "5. Django REST API - Transactions & History",
+      "item": [
+        {
+          "name": "Create Pending Transaction",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Pending transaction created (Status 201)', function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "const data = pm.response.json();",
+                  "if (data.transaction && data.transaction.id) {",
+                  "    pm.collectionVariables.set('transaction_id', String(data.transaction.id));",
+                  "    pm.environment.set('transaction_id', String(data.transaction.id));",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"card_id\": 1,\n  \"amount\": 1200.0,\n  \"category\": \"Groceries\"\n}"
+            },
+            "url": {
+              "raw": "{{django_base_url}}/api/transactions/create/",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "transactions",
+                "create",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Transaction Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"SUCCESS\"\n}"
+            },
+            "url": {
+              "raw": "{{django_base_url}}/api/transactions/{{transaction_id}}/status/",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "transactions",
+                "{{transaction_id}}",
+                "status",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Transaction History (All)",
           "request": {
             "method": "GET",
             "header": [
@@ -512,7 +991,7 @@
           "response": []
         },
         {
-          "name": "Django Transaction History - Success Filter",
+          "name": "Filter Transactions - Status",
           "request": {
             "method": "GET",
             "header": [
@@ -542,7 +1021,7 @@
           "response": []
         },
         {
-          "name": "Django Transaction History - Amount Filter",
+          "name": "Filter Transactions - Amount Range",
           "request": {
             "method": "GET",
             "header": [
@@ -576,9 +1055,197 @@
           "response": []
         },
         {
-          "name": "Django Logout",
+          "name": "Filter Transactions - Category",
           "request": {
-            "method": "POST",
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{django_base_url}}/api/transactions/?category=Dining",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "transactions",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "Dining"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Filter Transactions - Date Range",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{django_base_url}}/api/transactions/?start_date=2026-01-01&end_date=2026-12-31",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "transactions",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "2026-01-01"
+                },
+                {
+                  "key": "end_date",
+                  "value": "2026-12-31"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search Transactions - Masked Number / Digits",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{django_base_url}}/api/transactions/?search=1111",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "transactions",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "1111"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Paginated & Sorted Transactions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{django_base_url}}/api/transactions/?page=1&page_size=10&sort_by=-transaction_date",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "transactions",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "page_size",
+                  "value": "10"
+                },
+                {
+                  "key": "sort_by",
+                  "value": "-transaction_date"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Django Dashboard Summary",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{django_base_url}}/api/transactions/dashboard/summary/",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "transactions",
+                "dashboard",
+                "summary",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "6. Django REST API - Fraud Detection",
+      "item": [
+        {
+          "name": "List Fraud Logs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{django_base_url}}/api/transactions/fraud-logs/",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "transactions",
+                "fraud-logs",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Review Fraud Log",
+          "request": {
+            "method": "PATCH",
             "header": [
               {
                 "key": "Authorization",
@@ -591,16 +1258,239 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"refresh\": \"{{refresh_token}}\"\n}"
+              "raw": "{\n  \"status\": \"CONFIRMED\"\n}"
             },
             "url": {
-              "raw": "{{django_base_url}}/api/logout/",
+              "raw": "{{django_base_url}}/api/transactions/fraud-logs/{{fraud_log_id}}/review/",
               "host": [
                 "{{django_base_url}}"
               ],
               "path": [
                 "api",
-                "logout",
+                "transactions",
+                "fraud-logs",
+                "{{fraud_log_id}}",
+                "review",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "7. Django REST API - Analytics & Exports",
+      "item": [
+        {
+          "name": "Card Usage Analytics",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Card usage analytics returned 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const data = pm.response.json();",
+                  "pm.test('Analytics sections present', function () {",
+                  "    pm.expect(data).to.have.property('monthly_spending');",
+                  "    pm.expect(data).to.have.property('category_expenses');",
+                  "    pm.expect(data).to.have.property('credit_utilization');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{django_base_url}}/api/transactions/analytics/card-usage/",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "transactions",
+                "analytics",
+                "card-usage",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Export Analytics CSV",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{django_base_url}}/api/transactions/analytics/export/csv/",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "transactions",
+                "analytics",
+                "export",
+                "csv",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Export Analytics PDF",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{django_base_url}}/api/transactions/analytics/export/pdf/",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "transactions",
+                "analytics",
+                "export",
+                "pdf",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Export Transactions CSV",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{django_base_url}}/api/transactions/export/csv/?status=SUCCESS",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "transactions",
+                "export",
+                "csv",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "SUCCESS"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Monthly Statement PDF",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{django_base_url}}/api/transactions/monthly-statement/?month=10&year=2026",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "transactions",
+                "monthly-statement",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "month",
+                  "value": "10"
+                },
+                {
+                  "key": "year",
+                  "value": "2026"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "8. Django REST API - System Health & Metrics",
+      "item": [
+        {
+          "name": "System Health & Metrics",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Health endpoint returned 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const data = pm.response.json();",
+                  "pm.test('Health status is operational', function () {",
+                  "    pm.expect(data).to.have.property('status');",
+                  "    pm.expect(data).to.have.property('database');",
+                  "    pm.expect(data).to.have.property('metrics');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{django_base_url}}/api/system/health/",
+              "host": [
+                "{{django_base_url}}"
+              ],
+              "path": [
+                "api",
+                "system",
+                "health",
                 ""
               ]
             }
@@ -629,10 +1519,18 @@
     },
     {
       "key": "card_id",
-      "value": "3"
+      "value": "1"
     },
     {
       "key": "transaction_id",
+      "value": "1"
+    },
+    {
+      "key": "user_id",
+      "value": "2"
+    },
+    {
+      "key": "fraud_log_id",
       "value": "1"
     }
   ]
